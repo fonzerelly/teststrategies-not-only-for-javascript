@@ -3,6 +3,10 @@
         <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
         <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
         <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
+        <!-- will fail when released -->
+        <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
+        <!-- will fial when in development-->
+        <link rel="stylesheet" href="node_modules/highlight.js/styles/github.min.css">
         <meta charset="UTF-8">
         <style>
             .reveal section img {
@@ -50,6 +54,7 @@
                 hideAddressBar: true,
                 transition: "none"
             })
+            hljs.initHighlightingOnLoad();
         </script>
         <script>
             var link = document.createElement( 'link' );
