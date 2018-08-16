@@ -136,16 +136,65 @@ Note: Only if you you receive three or more Satellites your position can be dete
 So we need also further tests to determine the concrete behaviour of our production code.
 
 ??VERTICAL
-### Parametrized Tests
-```JavaScript
+### A second test
+```javascript
+const CeasarsCipher = require('ceasars-cipher.js')
 
+describe('ceasars-cipher', () => {
+    describe('encode', () => {
+        it('should encode "ABC" to "BCD"', () => {
+            expect(CeasarsCipher.encode(1, 'ABC')).toBe('BCD')
+        })
+
+        it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
+            expect(CeasarsCipher.encode(1, 'HELLOWORLD')).toBe('IFMMPXPSME')
+        })
+    })
+}) 
+```
+
+??VERTICAL
+### Red-Green-Cycle III
+Note: So this brings us to the last step of the Red-Green-Cycle: Refactoring. After we somehow turned the tests to green with whatsoever ugly code we could and have to refactor code, to simplify it and assure that we will understand it again a month later wenn we will have to add another feature.
+
+??VERTICAL
+```JavaScript
+class CeasarsCipher {
+    static encode(shift, text) {
+        let result = "";
+        for (let i = 0; i < text.length; i++) {
+            result += String.fromCharCode(text.charCodeAt(i) + shift);
+        }
+        return result;
+    }
+}
+module.exports = CeasarsCipher 
 ```
 
 ??VERTICAL
 ## Test more write less
-We even increased our productivity by identifying some tricks to write less code for more Tests
+Note: So you see it makes sense to write as many tests as you need to describe the different acceptanc criteria. But for each of these writing such complex tests is not what you want. Therefore we experimented with parametrised tests.
 
+### Parametrised tests
+```javascript
+const CeasarsCipher = require('ceasars-cipher.js')
 
+describe('ceasars-cipher', () => {
+    describe('encode', () => {
+
+        [
+            { shift: 1, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CeasarsCipher.encode(setup.shift, setup.input)).toBe(setup.output)
+            })
+        })
+    })
+}) 
+```
+
+Note: With that technique you can test a lot of scenarios quite fast without loosing anything of the expressiveness of the tests itself. Afterwards you will simply be able to identify which test might have failed. Unfortunatelly, this makes it harder to enforce specific tests with fit or disable tests with xit.
 ??VERTICAL
 ## The need for Dependency Injection
 
