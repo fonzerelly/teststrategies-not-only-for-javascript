@@ -352,16 +352,32 @@ Note: Now that it is clearly defined in which value range the algorithm works as
 
 Note: So you see, it is extremly helpful, to test your methods with property based testing. BUT it is not applicable to every algorithm. It works best for operations, that are revertable or that produce invariant idempodent results. If you are not working in pure functional environment, you probably need to plug different classes and services together so how can you properly test this issues.
 
-<!-- ??VERTICAL
+??VERTICAL
 ## The need for Dependency Injection
-Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units? 
+Note: Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units? 
 
 ??VERTICAL
 ### Accessing other units
-```JavaScript
+<!-- ```JavaScript
 const Logger = require('./logger.js')
 
 class MyClass  -->
+
+??VERTICAL
+### Overwriting require
+
+??VERTICAL
+### Problems with that approach
+
+??VERTICAL
+### Manual Dependency Injection
+
+??VERTICAL
+### Automatic Dependency Injection
+
+??VERTICAL
+### Actually testing in Dependency Injection
+
 
 
 ??VERTICAL
@@ -455,13 +471,38 @@ Note: ... and a meaningless test can trick code coverage very simple:
 
 ??VERTICAL
 ### Result on cheating code coverage
-<img src="images/cheated-coverage-console.png" width= "200%">
+<img src="images/cheated-coverage-console.png" width="200%">
 
 Note: Now Statements and Lines have a coverage of about 98%. I think in a more complex example you are very likly to overlook this issue and again have a hole in your window of trust.
 
 ??VERTICAL
-Note: A better option would be to work with mutation based testing
+## Mutation based Testing
+Note: A better option would be to work with mutation based testing. For JavaScript we use Stryker here. Instead of instrumenting your code it generates Mutants from it. This means it can replace + with - for example, or rename variables and many more. 
+When Stryker runs it trys to kill each of the Mutants by running your test suite. And it might fail one or more Mutants, if you did not test for this specific issue.
+In a configuration file, you can also decide which of those 30 Mutants must not be applied, if you think this aspect needs no attention.
 
 ??VERTICAL
+### Stryker installation
+<img src="images/stryker-install.gif" width="200%">
+Note: Installing Stryker is fairly simple. After installing it with npm you run it with the command init. This allows you to specify the testframework, testrunnr and the genrated reports. 
+
+??VERTICAL
+### Stryker run
+<img src="images/mutation-run.png" width="200%">
+Note: In our example of calc, we see that Stryker
+* initially runs the tests
+* generates Mutants
+* reruns the tests to kill them
+
+??VERTICAL
+### Stryker output
+<img src="images/mutation-result.png">
+
+Note: We can see here a very similar output like for code coverage. But it can not be tricked. The only drawback would be, that it takes more time to run since it has to run the test suite for each mutant one time. So maybe it should only be done on build server.
+
 ??VERTICAL
 #Summary
+* use TDD <!-- .element: class="fragment" -->
+* use PBT <!-- .element: class="fragment" -->
+* use depdency injection <!-- .element: class="fragment" -->
+* use Mutation based testing <!-- .element: class="fragment" -->
