@@ -34,12 +34,15 @@ Did you ever heard of the Broken-Window-Theory? It predicts that if you do not c
 And this was exactly what happened to our quality measures. 
 
 ??VERTICAL
+### Testing decay
+
 * If you do not trust in them, you do not take care of them. <!-- .element: class="fragment" -->
 * If you do not take care of them, they will become worthless. <!-- .element: class="fragment" -->
 * And you will be left with a bulk of unmaintainable code, as always... <!-- .element: class="fragment" -->
 
 ??VERTICAL
 ### Testing Pyramid
+<img src="images/testing-pyramid.jpg" width="50%">
 Note: Do you remember that we than took advice from this IT-Guy - Martin Fowler? He put up the model of the test pyramid. Since it is easiest and cheapest to write Unittests, he claims that you should create your test harness by a solid foundation of unit tests. Test the interaction of multiple Systems by some integration tests and only the happy path of the application by a few End-to-End-Tests. 
 
 
@@ -51,28 +54,34 @@ Do you remember that we applied Test-Driven-Development to reach this state? Yes
 
 ??VERTICAL
 ### Programm (classic)
+<img src="images/locf-1.jpg" width="75%">
 Note: When you write Software, of course you spent some time programming. This is the best part of the day when you can be creative and think about what the Software might need and you acutally write code.
 
 ??VERTICAL
 ### Study (classic)
+<img src="images/locf-2.jpg" width="75%">
 Note: But you also have to study code, to find the right place where to introduce features and find out how the system concretely works.
 
 ??VERTICAL
 ### Geek at Keyboard (classic)
+<img src="images/locf-3.jpg" width="75%">
 Note: But the majority of time we spent stepping through code by debugging. We debug to find out how the software currently works. We debug to test if our code changes work properly maybe several times. We click dozens of times through our app to bring the app into the state where the bug has to be fixed or the feature has to be implemented. This is such a waste of time.
 
 Let's have a look how this time spending changed after we applied TDD
 
 ??VERTICAL
 ### Programm (TDD)
+<img src="images/locf-4.jpg" width="75%">
 Note: So one of the issues the other elves had became true: Yes we spent about double of time for Programming (from which I said it is the best part of the day), because besides the production code we also have to write tests. BUT ...
 
 ??VERTICAL
 ### Studying (TDD)
+<img src="images/locf-5.jpg" width="75%">
 Note: Already the studying took less time, since for every production file we created also a test file which contains examples of each method how to use it and what outcome its call will have. So you will be much faster in studying because of the evaluatable documentation you have at hand.
 
 ??VERTICAL
 ### Geek at Keyboard (TDD)
+<img src="images/locf-6.jpg" width="75%">
 Note: But especially the GaK-Time reduced by 60-80%, because there was no need anymore to debug. There was no need to manually setup environments. All these things get prepared in for the tests upfront by mocking and stubbing.
 
 ??VERTICAL
@@ -80,6 +89,7 @@ Note: But especially the GaK-Time reduced by 60-80%, because there was no need a
 Note: So the basic idea behind TDD is, that we first write a test (not some tests, only one test), that describes one of the acceptence criteria for the feature we want to implement. So this very beginning makes us thinking:
 
 ??VERTICAL
+### Design Decisions
 * What should we call from where? <!-- .element: class="fragment" -->
 * How should we name it? <!-- .element: class="fragment" -->
 * What would we expect from it? <!-- .element: class="fragment" -->
@@ -87,6 +97,7 @@ Note: So the basic idea behind TDD is, that we first write a test (not some test
 Note: This already brings us into the need to make design decisions.
 
 ??VERTICAL
+### ceasars-cipher.spec.js
 ```javascript
 const CeasarsCipher = require('ceasars-cipher.js')
 
@@ -105,7 +116,7 @@ Note: Let's take a simple example here, where we want to implement Ceasars ciper
 Note: Then we write some code to make the test green. It might be the most tautological solution you can think of. But it fullfills the requirement. 
 
 ??VERTICAL
-
+### ceasars-cipher.js
 ```javascript
 class CeasarsCipher {
     static encode(shift, text) {
@@ -247,6 +258,7 @@ Wouldn't it be great to let the computer think of all variants we might forget? 
 Note: So in our case, after we encoded a text, we also want to decode it. And the result of decode should be the very same text, that we before put into encode. 
 
 ??VERTICAL
+## ceasars-cipher.pbt.js
 ```javascript
     const CeasarsCipher = require('./ceasars-cipher.js')
     const jsc = require('jsverify')
@@ -501,7 +513,7 @@ Note: In our example of calc, we see that Stryker
 Note: We can see here a very similar output like for code coverage. But it can not be tricked. The only drawback would be, that it takes more time to run since it has to run the test suite for each mutant one time. So maybe it should only be done on build server.
 
 ??VERTICAL
-#Summary
+## Summary
 * use TDD <!-- .element: class="fragment" -->
 * use PBT <!-- .element: class="fragment" -->
 * use depdency injection <!-- .element: class="fragment" -->
