@@ -206,7 +206,7 @@ describe('ceasars-cipher', () => {
             })
         })
     })
-}) 
+    }) 
 ```
 Note: Instead of writing for each test an it-block, we created parameter objects, that get fed into the foreach-loop. Inside of the forEach-loop, we used one of the two tests we wrote before and refactored it by replacing the hardcoded values by the parameters we passed in. With that technique you can test a lot of scenarios quite fast without loosing anything of the expressiveness of the tests itself. Afterwards you will simply be able to identify which test might have failed. Unfortunatelly, this makes it harder to enforce specific tests with fit or disable tests with xit.
 Please recognize that I also added a test to check if the algorithm works if the shift spreads accross the boarder of the alphabet. This should fail, since the ascii table provides far more chars than the 26 of the alphabet.
@@ -365,16 +365,140 @@ Note: Now that it is clearly defined in which value range the algorithm works as
 Note: So you see, it is extremly helpful, to test your methods with property based testing. BUT it is not applicable to every algorithm. It works best for operations, that are revertable or that produce invariant idempodent results. If you are not working in pure functional environment, you probably need to plug different classes and services together so how can you properly test this issues.
 
 ??VERTICAL
-## The need for Dependency Injection
-Note: Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units? 
+## Interaction with other units
+Note: Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units?
+
+??VERTICAL
+### What we want to test for
+```JavaScript
+const logger = require('./logger')
+class CeasasCipher
+    static encode(shift, message) {
+        if (shift < 0 || shift > 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+
+```
+Note: Let's say our ceasar-cipher-class needs to write to a logger when somebody failed in passing a correct message object to the encode-method. The logger might do whatever in that call like writing the info to a database, doing a console.log or turn the alert lights in your headquater to red. This is a side effect. This is nothing, we can check by exploring the output of a method. And it must not be of any concerns for ceasars-cipher what exactly logger does here. It is just important, that the right method of logger got called.
+
+??VERTICAL
+### Monkey Patching
+```JavaScript
+
+const obj = {
+    foo: () => {
+        console.log('foo')
+    }
+}
+
+obj.foo() // foo
+
+const origFoo = obj.foo
+obj.foo = () => {
+    origFoo()
+    console.log('bar')
+}
+
+obj.foo() //foo bar
+
+
+```
+Note: This is the first occation where we need something called mocking. To explain how mocking works in most testing and mocking frameworks, we need to explain what monkey patching is.
+In JavaScript functions are first class citizens, so you can pass them around like numbers, strings or any other kind of value. In addition members on objects are usually not writeprotected. Therefore you can simply modify the behaviour of an objects method by overwriting it with another function. Usually this is called Monkey Patching.
+
+If you protect the original functionality of that method and just augment it by additional code, this is called AspectOrientedProgramming and is more or less what happens when you apply annotations in TypeScript or any other kind of language.
+
+So you might say, this is a pretty feature of the language. But if you can not easily recognize this from the source, this can lead to extremely hard to find bugs. Therefore monkey patching is frowned on and you will not see it in the wild but when a compiler secures its application like in Angular / TypeScript.
 
 ??VERTICAL
 ### Accessing other units
-<!-- ```JavaScript
-const Logger = require('./logger.js')
+```JavaScript
+const CeasarsCipher = require('./ceasars-cipher')
 
-class MyClass  -->
+jest.mock('./logger')
+const logger = require('./logger')
 
+describe('CeasarsCipher', () => {
+    describe('encode', () => {
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CeasarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+```
+Note: Mocking depends very much on the testing framework or the mocking api you use (jasmine, jest, sinon, testdouble). Each provides its opinionated api to create mocks. What you choose is a matter of taste and a question weather or not you can or want to change your framework. But in any case under the hood happens more or less what I described as MonkeyPatching.
+Since I described all examples until now with jest, we will have a look at the jest api for mocking. In JavaScript all Modules act by default like a singleton. This allows us to manipulate the very same instance of logger in the test, that is also used in the production code. So jest.mock analyses which methods are part of logger module and replaces each of them by jest.fn mock functions (also called spies) which calls get tracked by test.
+So after provoking an error in the method and checking that this throws an exception, we can also check if logger.error have been called by the toHaveBeenCalled-Matcher.
+
+??VERTICAL
+### ceasars-cipher.js
+```JavaScript
+const Logger = require('./logger')
+
+class CeasarsCipher {
+    constructor() {
+        this.logger = new Logger();
+    }
+
+    encode(shift, message) {
+        if (shift < 0 || shift > 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+```
+
+Note: But lets say, logger would not be used as a singleton. Instead it would get generated dynamically in ceasars-cipher class itself. 
+
+* First of all this would mean to turn our nice static methods into state tainted methods.
+
+??VERTICAL
+### ceasars-cipher.spec.js
+```JavaScript
+const CeasarsCipher = require('./ceasars-cipher')
+const Logger = require('./logger')
+
+describe('CeasarsCipher', () => {
+    describe('encode', () => {
+        let mockError, ceasarsCipher
+        beforeEach(() => {
+            mockError = jest.spyOn(Logger.prototype, 'error')
+            mockError.mockImplementation(() => {})
+            ceasarsCipher = new CeasarsCipher()
+        })
+
+        afterEach(() => {
+            mockError.mockRestore()
+        })
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CeasarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(mockError).toHaveBeenCalled()
+        })
+    })
+})
+```
+
+??VERTICAL
+### Why is mocking problematic
+* 
+* 
 ??VERTICAL
 ### Overwriting require
 
