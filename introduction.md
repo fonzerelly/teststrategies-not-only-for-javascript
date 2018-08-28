@@ -436,9 +436,11 @@ describe('CeasarsCipher', () => {
     })
 })
 ```
-Note: Mocking depends very much on the testing framework or the mocking api you use (jasmine, jest, sinon, testdouble). Each provides its opinionated api to create mocks. What you choose is a matter of taste and a question weather or not you can or want to change your framework. But in any case under the hood happens more or less what I described as MonkeyPatching.
-Since I described all examples until now with jest, we will have a look at the jest api for mocking. In JavaScript all Modules act by default like a singleton. This allows us to manipulate the very same instance of logger in the test, that is also used in the production code. So jest.mock analyses which methods are part of logger module and replaces each of them by jest.fn mock functions (also called spies) which calls get tracked by test.
+Note: Mocking depends very much on the testing framework or the mocking api you use (jasmine, jest, sinon, testdouble). Each provides its opinionated api to create mocks. What you choose is a matter of taste and a question weather or not you can or want to change your framework. But in any case under the hood happens more or less what I described as MonkeyPatching.Since I described all examples until now with jest, we will have a look at the jest api for mocking. 
+
+In JavaScript all Modules act by default like a singleton. This allows us to manipulate the very same instance of logger in the test, that is also used in the production code. So jest.mock overwrites require, analyses which methods are part of logger module and replaces each of them by jest.fn mock functions (also called spies) which calls get tracked by test.
 So after provoking an error in the method and checking that this throws an exception, we can also check if logger.error have been called by the toHaveBeenCalled-Matcher.
+
 
 ??VERTICAL
 ### ceasars-cipher.js
@@ -489,32 +491,116 @@ describe('CeasarsCipher', () => {
             expect(() => { 
                 CeasarsCipher.encode(corruptShift, 'ABC')
             }).toThrow()
-            expect(mockError).toHaveBeenCalled()
+            expect(Logger.prototype.error).toHaveBeenCalled()
         })
     })
 })
 ```
+Note: The Test-Setup complicates a lot:
+* First we have to answer the question, how to access the Logger.error method, that needs to be mocked? You might want to access the logger variable of the instance. But it is it a good idea to access a member that is ment to be private ...? Does this tell the reader anything? The private variable logger might also be just a console.log instance or what ever. So we have no proof, that this call really means triggering a sideeffect.
+You can also overwrite the error-method on the prototype. But if you have more instances of logger, this can get tricky since you need to
+define how error should act according the instance it is running on in one implementation.
+* Second you have to manually undo the mocking (as seen in the afterEach-block) which somebody might forget to do, that can lead to strage behavious in other tests.
 
 ??VERTICAL
-### Why is mocking problematic
-* 
-* 
-??VERTICAL
-### Overwriting require
+### BUT ...
+* mocking dynamic objects is complex <!-- .element: class="fragment" -->
+* overwriting require leads to hard bug anlysis <!-- .element: class="fragment" -->
+* codesmell due to hardcoded dependencies <!-- .element: class="fragment" -->
+
+Note:
+As you can see mocking dynamically created objects, get more complex.
+-> Overwriting require as jest.mock does can lead to bugs that are hard to find. My experience with similar tools like testdouble or proxyquire introduced me often to errors I could not resolve. Therefore I want to discourage this kind of mocking
+-> In addition, this kind of mocking comes with a code smell. It means that you hardcoded a dependency. You miss an opportunity to apply the open closed principle by that. Otherwise you could modify the behaviour of this class just by passing in another dependency that provides similar functionality.
 
 ??VERTICAL
-### Problems with that approach
+### ceasars-cipher.js
+```JavaScript
+class CeasarsCipher {
+    constructor({ logger }) {
+        this.logger = logger;
+    }
+
+    encode(shift, message) {
+        if (shift < 0 || shift > 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+```
+
+Note: So if we would inject the logger dependency via constructor, it would look like this. Please recognize that we now do not have to require logger anymore. It is sufficiant to pass it to constructor. 
+Here we used deconstruction defined since ES6. It means that you put in an object literal that contains a field logger. And its content gets automatically mapped to a local variable called logger.
+
 
 ??VERTICAL
-### Manual Dependency Injection
+### ceasars-cipher.spec.js
+```JavaScript
+const CeasarsCipher = require('./ceasars-cipher')
+
+describe('CeasarsCipher', () => {
+    describe('encode', () => {
+        let logger, ceasarsCipher
+        beforeEach(() => {
+            logger = {
+                error: jest.fn()
+            }
+            ceasarsCipher = new CeasarsCipher({ logger })
+        })
+
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CeasarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+```
+Note: Now we have full controll over the testsetup. We do not need to clean up the mock, because it gets rebuild for each test. The tests do no longer depend on Logger module or the path to it, which means we are free to move ceasars-cipher.js and ceasars-cipher.spec.js whereever we want. This test is far more resillient since it only breaks if its own code breaks. 
+
+
+??VERTICAL
+### app.js
+```JavaScript
+const CeasarsCipher = require('./ceasars-cipher')
+const logger = require('./logger')
+
+const ceasarsCipher = new CeasarsCipher(logger)
+console.log(ceasarsCipher.encode(1, process.argv[2]))
+```
+Note: But now that each of our modules work independently how should we run the complete Program? We need now something that wires all the modules together. In this case I called it app.js but you will find similar files like server.js in your application. They are what in a classic C Programm was the main-method. It wraps up the start point for the complete application.
+This part of the application can not or only with much effort be tested by unit tests. So we do not automatically test it. But this code should be as thin as possible.
+
+I think you see that for this very simple use case, it is completely ok to do the wiring manually. But I think you can estimate, that very soon this wireing will get far to complicated and error prone.
 
 ??VERTICAL
 ### Automatic Dependency Injection
+```JavaScript
+const { createContainer, asClass } = require('awilix')
 
-??VERTICAL
-### Actually testing in Dependency Injection
+const container = createContainer()
 
+container.register({
+    ceasarsCipher: asClass(require('./ceasars-cipher')),
+    logger: asClass(require('./logger'))
+})
 
+const ceasarsCipher = container.resolve('ceasarsCipher')
+console.log(ceasarsCipher.encode(1, process.argv[2]))
+```
+Note: That is the reason why we should use a Dependency Injection Framework like awilix for JavaScript. Since we do not have valid type information in JavaScript, DI can not validly depend on it like it does in Java or Angular/Typescript. It has two Injection Modes:
+* By Proxy: This the default option and it expects the constructor of your classes to take a parameter object that contains the dependencies. Depending on the names used in this parameter objects, it identifies which Dependencies to build and inject.
+* CLASSIC: This works the same way as DI worked in Angular1. The parameternames of a constructor get analysed and used to identify dependencies. The Problem with this approach is, that you can not minify the code, since the variable and parameter names will be renamed in that process. 
+So here we create a DI-Container and register relevant classes or if you are familiar with functional programming, which I really recommend to you for JavaScript, you can also register Functions or plain values to it.
+container.resolve will instantiate a CeasarsCipher-Object for us with the necessary dependencies and that we can call as before.
+
+This is what I want to reach Santa. If we have this deep level and quality of UnitTesting everywhere, we really only need one or two E2E-Tests to check the happy path. Or we might even omit them and test manually since the only thing that should break now is the configuration.
 
 ??VERTICAL
 ## Did I do enough tests?
