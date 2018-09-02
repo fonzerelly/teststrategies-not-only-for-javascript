@@ -14,27 +14,27 @@ Can you remember the hussles we had back then?
 
 ??VERTICAL
 ### No Trust in our quality measures
-<img src="images/motivation-1.jpg">
+<img src="images/motivation-1.jpg" width="50%">
 Note: We had no trust in our measures. When we saw an error, it did not matter.
 
 ??VERTICAL
 ### When something happened eac h elve tried to accuse someother elve
-<img src="images/motivation-2.jpg">
+<img src="images/motivation-2.jpg" width="50%">
 Note: Instead we prefered to accuse everybody else that they introduced the error.
 
 ??VERTICAL
 ### Since no one was accusable, nobody cared
-<img src="images/motivation-3.jpg">
+<img src="images/motivation-3.jpg" width="50%">
 Note: But very soon, who ever was interested in good quality gave up on it, because any quality measure they took, very soon had been turned of by others who did not trust in the quality measure and turned them of, just to assure the release date and not beeing "slowed down". 
 
 ??VERTICAL
 ### People send back presents
-<img src="images/motivation-4.jpg">
+<img src="images/motivation-4.jpg" width="50%" >
 Note: But they ignored the fact, that they would loose much more time when people send back their presents due to some failures and they need to fix them.
 
 ??VERTICAL
 ### Broken-Window-Theory
-<img src="images/broken-window.jpg">
+<img src="images/broken-window.jpg" width="100%">
 Note: 
 Did you ever heard of the Broken-Window-Theory? It predicts that if you do not care about all windows in a house and one is broken, soon somebody will say: Nobody takes care of it, so why not try to hit another window just for fun. I will not be accused anyhow.
 And this was exactly what happened to our quality measures. 
@@ -54,7 +54,7 @@ Note: Do you remember that we than took advice from this IT-Guy - Martin Fowler?
 
 ??VERTICAL
 ## TDD
-<img src="images/tdd-0.jpg">
+<img src="images/tdd-0.jpg" width="50%">
 Note: Back then we wondered how we could come to this solid foundation of unit tests. Is there some guidance that leads you to this solid foundation of unit tests? What is the easiest way to reach it? 
 
 Do you remember that we applied Test-Driven-Development to reach this state? Yes it was hard time to convice my co elves to learn and apply this technique. I had to explain them how we spend our days without TDD and how it changed like Michael Hill explained it.
@@ -93,7 +93,7 @@ Note: But especially the GaK-Time reduced by 60-80%, because there was no need a
 
 ??VERTICAL
 ### Red-Green-Cycle I
-<img src="images/tdd-1-red.jpg">
+<img src="images/tdd-1-red.jpg" width="50%">
 Note: So the basic idea behind TDD is, that we first write a test (not some tests, only one test), that describes one of the acceptence criteria for the feature we want to implement. So this very beginning makes us thinking:
 
 ??VERTICAL
@@ -121,7 +121,7 @@ Note: Let's take a simple example here, where we want to implement Ceasars ciper
 
 ??VERTICAL
 ### Red-Green-Cycle II
-<img src="images/tdd-2-green.jpg">
+<img src="images/tdd-2-green.jpg" width="50%">
 Note: Then we write some code to make the test green. It might be the most tautological solution you can think of. But it fullfills the requirement. 
 
 ??VERTICAL
@@ -179,7 +179,7 @@ describe('ceasars-cipher', () => {
 
 ??VERTICAL
 ### Red-Green-Cycle III
-<img src="images/tdd-3-refactor.jpg">
+<img src="images/tdd-3-refactor.jpg" width="50%">
 Note: So this brings us to the last step of the Red-Green-Cycle: Refactoring. After we somehow turned the tests to green with whatsoever ugly code we could and have to refactor code, to simplify it and assure that we will understand it again a month later wenn we will have to add another feature.
 
 ??VERTICAL
