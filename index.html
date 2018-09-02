@@ -1,74 +1,99 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
-        <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
-        <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
-        <!-- will fail when released -->
-        <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
-        <!-- will fial when in development-->
-        <link rel="stylesheet" href="node_modules/highlight.js/styles/github.min.css">
-        <meta charset="UTF-8">
-        <style>
-            .reveal section img {
-                border: 0px;
-                box-shadow: none;
-            }
 
-            .reveal pre code {
-                max-height: 100%;
-                overflow-x: hidden;
-                width: 100%;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="reveal">
-            <div class="slides">
-                <section data-markdown="introduction.md"
-                     data-separator="^\?\?HORIZONTAL"
-                     data-separator-vertical="^\?\?VERTICAL"
-                     data-separator-notes="^Note:"
-                     data-charset="UTF-8">
-                </section>
-                <section>
-                    <h1>Thank you</h1>
-                    <br><br>
-                    Christian H&ouml;rauf<br>
-                    <img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
-                </section>
-                <section>
-                    <h2>Literature</h2>
-                    <ul>
-                        <li><a href="http://geepawhill.org/tdd-and-the-lump-of-coding-fallacy/">The Lump of Coding Fallacy</a> by Michael Hill</li>
-                        <li><a href="https://www.amazon.de/Software-Craftsman-Professionalism-Pragmatism-Robert/dp/0134052501/ref=sr_1_1?s=books-intl-de&ie=UTF8&qid=1529882364&sr=1-1&keywords=The+Software+Craftsman">The Software Craftsman</a> by Sandro Mancuso</li>
-                    </ul>
-                </section>
-            </div>
+<head>
+    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
+    <!-- will fail when released -->
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
+    <!-- will fial when in development-->
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.min.css">
+    <meta charset="UTF-8">
+    <style>
+        .reveal section img {
+            border: 0px;
+            box-shadow: none;
+        }
+
+        .reveal pre code {
+            max-height: 100%;
+            overflow-x: hidden;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown="introduction.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
+                data-charset="UTF-8">
+            </section>
+            <section>
+                <h1>Thank you</h1>
+                <br><br> Christian H&ouml;rauf<br>
+                <img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
+            </section>
+            <section>
+                <h2>Literature</h2>
+                <ul>
+                    <li><a href="https://martinfowler.com/bliki/TestPyramid.html">TestPyramid</a> by Martin Fowler</li>
+                    <li><a href="http://geepawhill.org/tdd-and-the-lump-of-coding-fallacy/">The Lump of Coding Fallacy</a>
+                        by Michael Hill</li>
+                    <li><a href="https://www.amazon.de/Software-Craftsman-Professionalism-Pragmatism-Robert/dp/0134052501/ref=sr_1_1?s=books-intl-de&ie=UTF8&qid=1529882364&sr=1-1&keywords=The+Software+Craftsman">The
+                            Software Craftsman</a> by Sandro Mancuso</li>
+                    <li><a href="https://www.heise.de/developer/artikel/Propert y-based-Testing-mit-JUnit-QuickCheck-3935767.html">Property-based
+                            Testing mit JUnit Quickcheck</a> by Stefan Macke</li>
+                    <li><a href="https://medium.com/easy-pieces-for-programmers/how-to-trick-oo-programmers-into-loving-functional-programming-7019e1bf9bba">How
+                            to Trick OO Programmers into Loving Functional Programming</a> by Nick Santos</li>
+                    <li><a href="https://medium.com/@Jeffijoe/dependency-injection-in-node-js-2016-edition-f2a88efdd427">Dependency
+                            Injection in Node.js - 2016 Edition</a> by Jeff Hansen</li>
+                    <li><a href="https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c">Understanding Jest Mocks</a> by Rick Hanlon II</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Tools</h2>
+                <ul>
+                    <li><a href="https://jestjs.io/">Jest</a></li>
+                    <li><a href="https://github.com/jsverify/jsverify">JSVerify</a></li>
+                    <li><a href="https://github.com/jeffijoe/awilix">Awilix</a></li>
+                    <li><a href="https://istanbul.js.org/">Istanbul.js</a></li>
+                    <li><a href="https://stryker-mutator.io/">Stryker</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Special Thanks to </h2>
+                <ul>
+                    <li><a href="https://www.shadowshow.de/">Phil Shadow</a></li>
+                </ul>
+            </section>
         </div>
-        <script src="node_modules/reveal.js/js/reveal.js"></script>
-        <script src="node_modules/reveal.js/plugin/markdown/marked.js"></script>
-        <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
-        <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
-        <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
-        <script src="node_modules/reveal.js/plugin/notes-server/client.js"></script>
-        <script>
-            Reveal.initialize({
-                controls: false,
-                progress: false,
-                history: true,
-                hideAddressBar: true,
-                transition: "none",
-                width: "100%",
-                height: "100%"
-            })
-            hljs.initHighlightingOnLoad();
-        </script>
-        <script>
-            var link = document.createElement( 'link' );
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = window.location.search.match( /print-pdf/gi ) ? 'node_modules/reveal.js/css/print/pdf.css' : 'node_modules/reveal.js/css/print/paper.css';
-            document.getElementsByTagName( 'head' )[0].appendChild( link );
-        </script>
-    </body>
+    </div>
+    <script src="node_modules/reveal.js/js/reveal.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/marked.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes-server/client.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false,
+            progress: false,
+            history: true,
+            hideAddressBar: true,
+            transition: "none",
+            width: "100%",
+            height: "100%"
+        })
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'node_modules/reveal.js/css/print/pdf.css' : 'node_modules/reveal.js/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</body>
+
 </html>

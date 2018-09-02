@@ -1,7 +1,11 @@
 ## Testing Strategies 
 ## (not only) 
 ## for JavaScript
+by Christian H&ouml;rauf<br>
+<img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
 
+??VERTICAL
+<img src="images/consorsbank.jpg">
 Note: Hi all, thanx for having me here. My name is Christian Hörauf and I work as a developer for Consorsbank in Nürnberg. Last year I gave Santa Clause for the children of our friends. And you know St Clauses Business. Providing pesents for children. But his unique selling point is this incredibly tough time schedule to visit all children in one night. You know this event, when everybody sets up Trees in their rooms and meets their families and stuff - X-Mess. And in that same night when I played St Clause, I had the dream that lead elves of computer game develoment was talking to me. And this is what he said:
 
 Hey Santa, we need to talk about our flow of production. I understand that for you it is most important that we create presents, presents, presents. But I you know, that we do not have the progress you expected and maybe we can invest a little bit more time in our development process. I would love to provide you some ideas: 
@@ -18,7 +22,7 @@ Can you remember the hussles we had back then?
 Note: We had no trust in our measures. When we saw an error, it did not matter.
 
 ??VERTICAL
-### When something happened eac h elve tried to accuse someother elve
+### When something happened each elve tried to accuse some other elve
 <img src="images/motivation-2.jpg" width="50%">
 Note: Instead we prefered to accuse everybody else that they introduced the error.
 
@@ -42,8 +46,8 @@ And this was exactly what happened to our quality measures.
 ??VERTICAL
 ### Testing decay
 
-* If you do not trust in them, you do not take care of them. <!-- .element: class="fragment" -->
-* If you do not take care of them, they will become worthless. <!-- .element: class="fragment" -->
+* If you do not trust in them, you do not take care of them <!-- .element: class="fragment" -->
+* If you do not take care of them, they will become worthless <!-- .element: class="fragment" -->
 * And you will be left with a bulk of unmaintainable code, as always... <!-- .element: class="fragment" -->
 
 ??VERTICAL
@@ -97,9 +101,9 @@ Note: But especially the GaK-Time reduced by 60-80%, because there was no need a
 Note: So the basic idea behind TDD is, that we first write a test (not some tests, only one test), that describes one of the acceptence criteria for the feature we want to implement. So this very beginning makes us thinking:
 
 ??VERTICAL
-### Design Decisions
-* What should we call from where? <!-- .element: class="fragment" -->
+### Design Decisions    
 * How should we name it? <!-- .element: class="fragment" -->
+* Where should we place it? <!-- .element: class="fragment" -->
 * What would we expect from it? <!-- .element: class="fragment" -->
 
 Note: This already brings us into the need to make design decisions.
@@ -199,7 +203,7 @@ module.exports = CeasarsCipher
 
 ??VERTICAL
 ## Test more write less
-<img src="images/parametrized-tests.jpg">
+<img src="images/parametrized-tests.jpg" width="50%">
 Note: So you see it makes sense to write as many tests as you need to describe the different git acceptanc criteria. But for each of these writing such complex tests is not what you want. Therefore we experimented with parametrised tests.
 
 ??VERTICAL
@@ -249,11 +253,11 @@ class CeasarsCipher {
     }
 
 ```
-Note: Therefore I refactored the algorithm. First I created an array containing the characters of the alphabet. From this I created the so called k, which is the new alphabet based on the expected shift operation. Now the encoding is a simple mapping between the normal alphabet and the key-alphabet.
+Note: Therefore I refactored the algorithm. First I created an array containing the characters of the alphabet. From this I created the so called key, which is the new alphabet based on the expected shift operation. Now the encoding is a simple mapping between the normal alphabet and the key-alphabet.
 
 ??VERTICAL
 ### Property Based Testing
-<img src="images/property-based-testing.jpg">
+<img src="images/property-based-testing.jpg" width="50%">
 Note: But even now, we can not be sure, to think of all variants that could happen to our method. Any ideas what I might have missed until now?
 
 Wouldn't it be great to let the computer think of all variants we might forget? This approach is called Property Based Testing. For this we have to think of a so called invariant, something that holds true no matter what kind of parameter we put in the method. One way to find this, is to have some kind of undo-function.
@@ -296,7 +300,7 @@ Note: So in our case, after we encoded a text, we also want to decode it. And th
 ```
 Note: For PropertyBasedTesting in JavaScript, we used JSVerify. Let's first have a look at how to use JSVerify. jsc comes with a function called checkForall. It takes an undefined number of parameters. All but the last parameter should be so called generators. jsverify provides a lot of them, even for datatypes that you would not expect in JavaScript, like integer. This generator will create random integer numbers that might range between minus infinity and inifinity. But it preferably tries to generate numbers around edgecases like zero. Similar is true for jsc.string.
 Those generated values get passed to the callback, which is always the last parameter of checkForall. Here you see in code, our idea for the invariant. We take the text we get passed, encode it, decode the result and compare it with the text we originally got passed. If they are equal we return true or false otherwise.
-Of course checkForall will not run for every value in the realm of possible values. Such a test would take far too long. Instead it calls the callback by default a 100 times.
+Of course checkForall will not run for every value in the realm of possible values. Such a test would take far too long. Instead it calls the callback by default a 100 times with random values fullfilling the gereators types.
 The outcome-variable in our example should be true after all these evaluations. But be careful, otherwise it will become an object containing error information. SO YOU MUST NOT USE THE MATCHER toBeTruthy HERE, BECAUSE JAVASCRIPT WOULD RECOGNIZE EVEN SUCH AN ERROR OBJECT TO BE TRUTHY!
 
 So Santa do you think this test just passed without any issues? No of course not - it showed me a lot flaws I did oversee in the first place:
@@ -315,8 +319,9 @@ So Santa do you think this test just passed without any issues? No of course not
 ```
 Note: 
 Here you see that my algorithm failed on the unified character \u0000. The reason for that was, that my algorithm had to limit the amount of supported characters to upper case chars A-Z and white spaces by depending on the Array with all supported chars.
-We also see so called "shrinks" which are modifications of a random data that get reduced to the critical corner cases like empty strings or 0
-rngState is the seed used for the randomized data. It helps you to reproduce an error case if it happens to you.
+We also see so called "shrinks" which are modifications of a random data that get reduced to the critical corner cases like empty strings or 0.
+
+"rngState" is the seed used for the randomized data. It helps you to reproduce an error case if it happens to you.
 
 ??VERTICAL
 ### What JSVERIFY tells us II
@@ -374,7 +379,7 @@ Note: Now that it is clearly defined in which value range the algorithm works as
 
 ??VERTICAL
 ### BUT... 
-* it is not appicable for every algorithm <!-- .element: class="fragment" -->
+* it is not applicable for every algorithm <!-- .element: class="fragment" -->
 * it works best for revertable operations <!-- .element: class="fragment" -->
 * it works for idempotent results <!-- .element: class="fragment" -->
 
@@ -382,7 +387,7 @@ Note: So you see, it is extremly helpful, to test your methods with property bas
 
 ??VERTICAL
 ## Interaction with other units
-<img src="images/dependency-injection.jpg">
+<img src="images/dependency-injection.jpg" width="50%">
 Note: Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units?
 
 ??VERTICAL
@@ -434,7 +439,7 @@ If you protect the original functionality of that method and just augment it by 
 So you might say, this is a pretty feature of the language. But if you can not easily recognize this from the source, this can lead to extremely hard to find bugs. Therefore monkey patching is frowned on and you will not see it in the wild but when a compiler secures its application like in Angular / TypeScript.
 
 ??VERTICAL
-### Accessing other units
+### Mocking with Jest
 ```JavaScript
 const CeasarsCipher = require('./ceasars-cipher')
 
@@ -514,7 +519,7 @@ describe('CeasarsCipher', () => {
 })
 ```
 Note: The Test-Setup complicates a lot:
-* First we have to answer the question, how to access the Logger.error method, that needs to be mocked? You might want to access the logger variable of the instance. But it is it a good idea to access a member that is ment to be private ...? Does this tell the reader anything? The private variable logger might also be just a console.log instance or what ever. So we have no proof, that this call really means triggering a sideeffect.
+* First we have to answer the question, how to access the Logger.error method, that needs to be mocked? You might want to access the logger variable of the instance. But is it a good idea to access a member that is ment to be private ...? Does this tell the reader anything? The private variable logger might also be just a console.log instance or what ever. So we have no proof, that this call really means triggering a sideeffect.
 You can also overwrite the error-method on the prototype. But if you have more instances of logger, this can get tricky since you need to
 define how error should act according the instance it is running on in one implementation.
 * Second you have to manually undo the mocking (as seen in the afterEach-block) which somebody might forget to do, that can lead to strage behavious in other tests.
@@ -621,12 +626,12 @@ This is what I want to reach Santa. If we have this deep level and quality of Un
 
 ??VERTICAL
 ## Did I do enough tests?
-<img src="images/did-i-do-enough-tests.jpg">
+<img src="images/did-i-do-enough-tests.jpg" width="50%">
 Note: In the beginning of this talk, I described the situation that we need to take care to prevent the broken window syndrome and we need trust in our test? So until now I showed you a lot of testing techniques and if you apply them, I suppose you will get a lot of good tests. But how can you get trust? Let's say you apply those techniques but your collegues are not so strict. This would mean, your code is properly tested but the rest of the application is not tested properly. This would mean that your team would loose confidence into the outcome of the test. So we need some kinds of quality measures to assure our trust.
 
 ??VERTICAL
-### CodeCoverage
-<img src="images/schattenspiele.png">
+## CodeCoverage
+<img src="images/schattenspiele.png" width="50%">
 Note: One option to gain that trust is Code Coverage. The basic idea is, that each line in your Code gets instrumentalized, so that meanwhile test we can track which line of code has been passed. The standard Code Coverage tool for JavaScript is Istanbul. In many cases it is already installed. If you setup your Angular Project for example with Angular-cli or if you work with react and you use Jest for your tests it is also already part of the installation. Let's have a look what code coverage data looks like: 
 
 ??VERTICAL
@@ -669,7 +674,7 @@ Note: The Problem is, that we are missing any test for sub. How would Istanbul h
 
 ??VERTICAL
 ### coverage report for calc.js
-<img src="images/code-coverage-browser.png">
+<img src="images/code-coverage-browser.png" width="80%">
 Note: Exactly that: The code of the method sub has never been called.
 
 So far so good. If you work with a decent elve, she or he would write at least one test for sub and we are done. But sometimes this efford seems to be too much for my fellow elves. So Evil Elfe could think of this:
@@ -718,7 +723,7 @@ Note: Now Statements and Lines have a coverage of about 98%. I think in a more c
 
 ??VERTICAL
 ## Mutation based Testing
-<img src="images/mutation-based-testing.jpg">
+<img src="images/mutation-based-testing.jpg" width="50%">
 Note: A better option would be to work with mutation based testing. For JavaScript we use Stryker here. Instead of instrumenting your code it generates Mutants from it. This means it can replace + with - for example, or rename variables and many more. 
 When Stryker runs it trys to kill each of the Mutants by running your test suite. And it might fail one or more Mutants, if you did not test for this specific issue.
 In a configuration file, you can also decide which of those 30 Mutants must not be applied, if you think this aspect needs no attention.
@@ -747,7 +752,10 @@ Note: We can see here a very similar output like for code coverage. But it can n
 * use TDD <!-- .element: class="fragment" -->
 * use PBT <!-- .element: class="fragment" -->
 * use depdency injection <!-- .element: class="fragment" -->
-* use Mutation based testing <!-- .element: class="fragment" -->
+* get a first impression by CodeCoverage <!-- .element: class="fragment" -->
+* use Mutation based testing on the CI-server <!-- .element: class="fragment" -->
 
 ??VERTICAL
-<img src="images/sleep-well.jpg"    >
+<img src="images/sleep-well.jpg" width="50%">
+Note:
+Now you can sleep well, Santa. Now our UnitTests are fine. And next year we talk about Integration Tests with Cucumber and the like.
