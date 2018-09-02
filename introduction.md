@@ -8,7 +8,7 @@ Hey Santa, we need to talk about our flow of production. I understand that for y
 
 ??VERTICAL
 ## Motivation
-<img src="images/motivation-0.jpg">
+<img src="images/motivation-0.jpg" width="75%">
 Note: First of all, can you remember last year, when we were so far behind the schedule, that you was afraid that you could not deliver all ordered presents in time and people might loose faith in you? May I remind you of your awful nightmares you had at that time. You woke up every night and mumbled something about Easter Bunnies ruling the earth...
 Can you remember the hussles we had back then? 
 
