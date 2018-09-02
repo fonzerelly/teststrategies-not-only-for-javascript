@@ -8,27 +8,33 @@ Hey Santa, we need to talk about our flow of production. I understand that for y
 
 ??VERTICAL
 ## Motivation
+<img src="images/motivation-0.jpg">
 Note: First of all, can you remember last year, when we were so far behind the schedule, that you was afraid that you could not deliver all ordered presents in time and people might loose faith in you? May I remind you of your awful nightmares you had at that time. You woke up every night and mumbled something about Easter Bunnies ruling the earth...
 Can you remember the hussles we had back then? 
 
 ??VERTICAL
 ### No Trust in our quality measures
+<img src="images/motivation-1.jpg">
 Note: We had no trust in our measures. When we saw an error, it did not matter.
 
 ??VERTICAL
-### When something happened each elve tried to accuse someother elve
+### When something happened eac h elve tried to accuse someother elve
+<img src="images/motivation-2.jpg">
 Note: Instead we prefered to accuse everybody else that they introduced the error.
 
 ??VERTICAL
 ### Since no one was accusable, nobody cared
+<img src="images/motivation-3.jpg">
 Note: But very soon, who ever was interested in good quality gave up on it, because any quality measure they took, very soon had been turned of by others who did not trust in the quality measure and turned them of, just to assure the release date and not beeing "slowed down". 
 
 ??VERTICAL
 ### People send back presents
+<img src="images/motivation-4.jpg">
 Note: But they ignored the fact, that they would loose much more time when people send back their presents due to some failures and they need to fix them.
 
 ??VERTICAL
 ### Broken-Window-Theory
+<img src="images/broken-window.jpg">
 Note: 
 Did you ever heard of the Broken-Window-Theory? It predicts that if you do not care about all windows in a house and one is broken, soon somebody will say: Nobody takes care of it, so why not try to hit another window just for fun. I will not be accused anyhow.
 And this was exactly what happened to our quality measures. 
@@ -42,12 +48,13 @@ And this was exactly what happened to our quality measures.
 
 ??VERTICAL
 ### Testing Pyramid
-<img src="images/testing-pyramid.jpg" width="50%">
+<img src="images/testing-pyramid.jpg" width="45%">
 Note: Do you remember that we than took advice from this IT-Guy - Martin Fowler? He put up the model of the test pyramid. Since it is easiest and cheapest to write Unittests, he claims that you should create your test harness by a solid foundation of unit tests. Test the interaction of multiple Systems by some integration tests and only the happy path of the application by a few End-to-End-Tests. 
 
 
 ??VERTICAL
 ## TDD
+<img src="images/tdd-0.jpg">
 Note: Back then we wondered how we could come to this solid foundation of unit tests. Is there some guidance that leads you to this solid foundation of unit tests? What is the easiest way to reach it? 
 
 Do you remember that we applied Test-Driven-Development to reach this state? Yes it was hard time to convice my co elves to learn and apply this technique. I had to explain them how we spend our days without TDD and how it changed like Michael Hill explained it.
@@ -86,6 +93,7 @@ Note: But especially the GaK-Time reduced by 60-80%, because there was no need a
 
 ??VERTICAL
 ### Red-Green-Cycle I
+<img src="images/tdd-1-red.jpg">
 Note: So the basic idea behind TDD is, that we first write a test (not some tests, only one test), that describes one of the acceptence criteria for the feature we want to implement. So this very beginning makes us thinking:
 
 ??VERTICAL
@@ -113,6 +121,7 @@ Note: Let's take a simple example here, where we want to implement Ceasars ciper
 
 ??VERTICAL
 ### Red-Green-Cycle II
+<img src="images/tdd-2-green.jpg">
 Note: Then we write some code to make the test green. It might be the most tautological solution you can think of. But it fullfills the requirement. 
 
 ??VERTICAL
@@ -130,21 +139,25 @@ Note: Here we just setup the class with a static method, returing the very same 
 
 ??VERTICAL
 ### Triangulation
+<img src="images/triangulation-0.jpg">
 Note: Of course this does not help us much. We need an algorithm that really does the encryption. So how can we force it to do what we want by test? Currently we have only this one test. It provides our production code a large variety of how to act. Currently our production code could also raise a database or connect to a server in the internet. We need to center its freedom to what we need it to do. Just similar to how triangulation in GPS is working.
 
 ??VERTICAL
 ### One Satellite
+<img src="images/triangulation-1.jpg">
 Note: If you receive only one Satellite, you might be somewhere in the wide circle that the signal of the satellite projects on the surface of earth. 
 
 ??VERTICAL
 ### Two Satellites
+<img src="images/triangulation-2.jpg">
 Note: If you receive two Satellites, both projected circles intersect in two points. Both might represent your position on earth.
 
 ??VERTICAL
 ### Three Satellites
+<img src="images/triangulation-3.jpg">
 Note: Only if you you receive three or more Satellites your position can be determined. 
 
-So we need also further tests to determine the concrete behaviour of our production code.
+So we need also further tests to determine the concrete behaviour of our production code. The more tests we write, the closer we get to the specification
 
 ??VERTICAL
 ### A second test
@@ -166,6 +179,7 @@ describe('ceasars-cipher', () => {
 
 ??VERTICAL
 ### Red-Green-Cycle III
+<img src="images/tdd-3-refactor.jpg">
 Note: So this brings us to the last step of the Red-Green-Cycle: Refactoring. After we somehow turned the tests to green with whatsoever ugly code we could and have to refactor code, to simplify it and assure that we will understand it again a month later wenn we will have to add another feature.
 
 ??VERTICAL
@@ -185,7 +199,8 @@ module.exports = CeasarsCipher
 
 ??VERTICAL
 ## Test more write less
-Note: So you see it makes sense to write as many tests as you need to describe the different acceptanc criteria. But for each of these writing such complex tests is not what you want. Therefore we experimented with parametrised tests.
+<img src="images/parametrized-tests.jpg">
+Note: So you see it makes sense to write as many tests as you need to describe the different git acceptanc criteria. But for each of these writing such complex tests is not what you want. Therefore we experimented with parametrised tests.
 
 ??VERTICAL
 ### Parametrised tests
@@ -238,6 +253,7 @@ Note: Therefore I refactored the algorithm. First I created an array containing 
 
 ??VERTICAL
 ### Property Based Testing
+<img src="images/property-based-testing.jpg">
 Note: But even now, we can not be sure, to think of all variants that could happen to our method. Any ideas what I might have missed until now?
 
 Wouldn't it be great to let the computer think of all variants we might forget? This approach is called Property Based Testing. For this we have to think of a so called invariant, something that holds true no matter what kind of parameter we put in the method. One way to find this, is to have some kind of undo-function.
@@ -366,6 +382,7 @@ Note: So you see, it is extremly helpful, to test your methods with property bas
 
 ??VERTICAL
 ## Interaction with other units
+<img src="images/dependency-injection.jpg">
 Note: Santa do you see that we have use cases that can not be tested with pbt? As soon, as your unit needs support from other units, you need another form of testing. Now let's consider how you can access other units?
 
 ??VERTICAL
@@ -604,10 +621,12 @@ This is what I want to reach Santa. If we have this deep level and quality of Un
 
 ??VERTICAL
 ## Did I do enough tests?
+<img src="images/did-i-do-enough-tests.jpg">
 Note: In the beginning of this talk, I described the situation that we need to take care to prevent the broken window syndrome and we need trust in our test? So until now I showed you a lot of testing techniques and if you apply them, I suppose you will get a lot of good tests. But how can you get trust? Let's say you apply those techniques but your collegues are not so strict. This would mean, your code is properly tested but the rest of the application is not tested properly. This would mean that your team would loose confidence into the outcome of the test. So we need some kinds of quality measures to assure our trust.
 
 ??VERTICAL
 ### CodeCoverage
+<img src="images/schattenspiele.png">
 Note: One option to gain that trust is Code Coverage. The basic idea is, that each line in your Code gets instrumentalized, so that meanwhile test we can track which line of code has been passed. The standard Code Coverage tool for JavaScript is Istanbul. In many cases it is already installed. If you setup your Angular Project for example with Angular-cli or if you work with react and you use Jest for your tests it is also already part of the installation. Let's have a look what code coverage data looks like: 
 
 ??VERTICAL
@@ -699,6 +718,7 @@ Note: Now Statements and Lines have a coverage of about 98%. I think in a more c
 
 ??VERTICAL
 ## Mutation based Testing
+<img src="images/mutation-based-testing.jpg">
 Note: A better option would be to work with mutation based testing. For JavaScript we use Stryker here. Instead of instrumenting your code it generates Mutants from it. This means it can replace + with - for example, or rename variables and many more. 
 When Stryker runs it trys to kill each of the Mutants by running your test suite. And it might fail one or more Mutants, if you did not test for this specific issue.
 In a configuration file, you can also decide which of those 30 Mutants must not be applied, if you think this aspect needs no attention.
@@ -728,3 +748,6 @@ Note: We can see here a very similar output like for code coverage. But it can n
 * use PBT <!-- .element: class="fragment" -->
 * use depdency injection <!-- .element: class="fragment" -->
 * use Mutation based testing <!-- .element: class="fragment" -->
+
+??VERTICAL
+<img src="images/sleep-well.jpg"    >
