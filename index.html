@@ -411,7 +411,50 @@ class CaesarsCipher {
 module.exports = CaesarsCipher
                 </code></pre>
             </section>
-            
+
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    static decode(shift, text) {
+        return CaesarsCipher.encode(_alphabet.length - shift ,text)
+    }
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    <mark>static decode(shift, text) {</mark>
+    <mark>    return CaesarsCipher.encode(_alphabet.length - shift ,text)</mark>
+    <mark>}</mark>
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    static decode(shift, text) {
+        return CaesarsCipher.encode(<mark>_alphabet.length - shift</mark> ,text)
+    }
+}
+                </code></pre>
+            </section>
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
