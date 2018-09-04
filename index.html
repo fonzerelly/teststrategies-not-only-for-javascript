@@ -26,8 +26,168 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <section data-markdown="introduction.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
+            <!-- <section data-markdown="introduction.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
                 data-charset="UTF-8">
+            </section> -->
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    const CaesarsCipher = require('./caesars-cipher')
+
+                    describe('caesars-cipher', () => {
+                        describe('encode', () => {
+                            it(`should encode 'ABC' to 'BCD'`, () => {
+                                expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+                            })
+                        })
+                    })
+            </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                        const CaesarsCipher = require('./caesars-cipher')
+    
+                        describe('caesars-cipher', () => {
+                            describe('encode', () => {
+                                it(`should encode 'ABC' to 'BCD'`, () => {
+                                    expect(CaesarsCipher.encode(1, <mark>'ABC'</mark>)).toBe('BCD')
+                                })
+                            })
+                        })
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                            const CaesarsCipher = require('./caesars-cipher')
+        
+                            describe('caesars-cipher', () => {
+                                describe('encode', () => {
+                                    it(`should encode 'ABC' to 'BCD'`, () => {
+                                        expect(CaesarsCipher.encode(1, 'ABC')).toBe(<mark>'BCD'</mark>)
+                                    })
+                                })
+                            })
+                    </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            return 'BCD'
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            <mark>return 'BCD'</mark>
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                    </code></pre>
+            </section>
+            <section>
+                <h3>A second test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    const CaesarsCipher = require('caesars-cipher.js')
+
+                    describe('caesars-cipher', () => {
+                        describe('encode', () => {
+                            it('should encode "ABC" to "BCD"', () => {
+                                expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+                            })
+                    
+                            it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
+                                expect(CaesarsCipher.encode(1, 'HELLOWORLD')).toBe('IFMMPXPSME')
+                            })
+                        })
+                    })
+                </code></pre>
+            </section>
+            <section>
+                <h3>A second test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                        const CaesarsCipher = require('caesars-cipher.js')
+    
+                        describe('caesars-cipher', () => {
+                            describe('encode', () => {
+                                it('should encode "ABC" to "BCD"', () => {
+                                    expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+                                })
+                        
+                                it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
+                                    expect(CaesarsCipher.encode(1, <mark>'HELLOWORLD'</mark>)).toBe(<mark>'IFMMPXPSME'</mark>)
+                                })
+                            })
+                        })
+                    </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &gt; text.length; i++) {
+                                result += String.fromCharCode(text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; <mark>i &gt; text.length</mark>; i++) {
+                                result += String.fromCharCode(text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &gt; text.length; i++) {
+                                result += String.fromCharCode(<mark>text.charCodeAt(i) + shift</mark>)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &gt; text.length; i++) {
+                                result += <mark>String.fromCharCode</mark>  (text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
             </section>
             <section>
                 <h1>Thank you</h1>
@@ -48,7 +208,9 @@
                             to Trick OO Programmers into Loving Functional Programming</a> by Nick Santos</li>
                     <li><a href="https://medium.com/@Jeffijoe/dependency-injection-in-node-js-2016-edition-f2a88efdd427">Dependency
                             Injection in Node.js - 2016 Edition</a> by Jeff Hansen</li>
-                    <li><a href="https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c">Understanding Jest Mocks</a> by Rick Hanlon II</li>
+                    <li><a href="https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c">Understanding Jest
+                            Mocks
+                        </a> by Rick Hanlon II</li>
                 </ul>
             </section>
             <section>
