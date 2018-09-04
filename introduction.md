@@ -751,7 +751,7 @@ Note: We can see here a very similar output like for code coverage. But it can n
 ## Summary
 * use TDD <!-- .element: class="fragment" -->
 * use PBT <!-- .element: class="fragment" -->
-* use depdency injection <!-- .element: class="fragment" -->
+* use dependency injection <!-- .element: class="fragment" -->
 * get a first impression by CodeCoverage <!-- .element: class="fragment" -->
 * use Mutation based testing on the CI-server <!-- .element: class="fragment" -->
 
