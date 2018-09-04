@@ -190,6 +190,132 @@
                 </code></pre>
             </section>
             <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { <mark>shift: 1</mark>, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(<mark>setup.shift</mark>, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+})
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, <mark>input: 'ABC'</mark>, output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${<mark>setup.input</mark>}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, <mark>setup.input</mark>))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', <mark>output: 'BCD'</mark> },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${<mark>setup.output</mark>}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(<mark>setup.output</mark>)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            <mark>{ shift: 1, input: 'ABC', output: 'BCD' },</mark>
+            <mark>{ shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },</mark>
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            <mark>{ shift: 1, input: 'XYZ', output: 'YZA'},</mark>
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                    </code></pre>
+            </section>
+            <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
                 <img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
