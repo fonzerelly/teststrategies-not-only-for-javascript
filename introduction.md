@@ -265,6 +265,7 @@ Wouldn't it be great to let the computer think of all variants we might forget? 
 ??HORIZONTAL
 ### Undoing encode is decode
 ```javascript
+    ...
     class CaesarsCipher {
         static encode(shift, text) {
             ...
@@ -394,7 +395,7 @@ Note: Santa do you see that we have use cases that can not be tested with pbt? A
 ### What we want to test for
 ```JavaScript
 const logger = require('./logger')
-class CeasasCipher
+class CaesarsCipher
     static encode(shift, message) {
         if (shift < 0 || shift > 26) {
             const msg = `"${shift}" is no valid shift parameter!`
