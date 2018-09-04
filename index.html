@@ -316,6 +316,103 @@ describe('caesars-cipher', () => {
                     </code></pre>
             </section>
             <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  _alphabet
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return toAlphabetIndex(text).map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+<mark>const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']</mark>
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  <mark>_alphabet</mark>
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return toAlphabetIndex(text).map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+<mark>function toAlphabetIndex (text) {</mark>
+<mark>    return text.split('')</mark>
+<mark>        .map((ch) => _alphabet.indexOf(ch))</mark>
+<mark>}</mark>
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  _alphabet
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return <mark>toAlphabetIndex(text)</mark>.map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        <mark>let key =  _alphabet</mark>
+        <mark>        .slice(shift)</mark>
+        <mark>        .concat(_alphabet.slice(0, shift))</mark>
+
+        return toAlphabetIndex(text).map((index) => {
+            <mark>return key[index]</mark>
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            
+            <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
                 <img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
