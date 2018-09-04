@@ -109,19 +109,19 @@ Note: So the basic idea behind TDD is, that we first write a test (not some test
 Note: This already brings us into the need to make design decisions.
 
 ??HORIZONTAL
-### ceasars-cipher.spec.js
+### caesars-cipher.spec.js
 ```javascript
-const CeasarsCipher = require('ceasars-cipher.js')
+const CaesarsCipher = require('caesars-cipher.js')
 
-describe('ceasars-cipher', () => {
+describe('caesars-cipher', () => {
     describe('encode', () => {
         it(`should encode 'ABC' to 'BCD'`, () => {
-            expect(CeasarsCipher.encode(1, 'ABC')).toBe('BCD')
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
         })
     })
 }) 
 ```
-Note: Let's take a simple example here, where we want to implement Ceasars ciper. The well known roman leader used to encrypt his military messages by rotating each letter in the alphabet by a specified number. This number was the key from which the soldiers could decrypt the message. As in this first test we have the message 'ABC' and by rotating each letter by 1, we get 'BCD'.
+Note: Let's take a simple example here, where we want to implement Caesars ciper. The well known roman leader used to encrypt his military messages by rotating each letter in the alphabet by a specified number. This number was the key from which the soldiers could decrypt the message. As in this first test we have the message 'ABC' and by rotating each letter by 1, we get 'BCD'.
 
 ??HORIZONTAL
 ### Red-Green-Cycle II
@@ -129,14 +129,14 @@ Note: Let's take a simple example here, where we want to implement Ceasars ciper
 Note: Then we write some code to make the test green. It might be the most tautological solution you can think of. But it fullfills the requirement. 
 
 ??HORIZONTAL
-### ceasars-cipher.js
+### caesars-cipher.js
 ```javascript
-class CeasarsCipher {
+class CaesarsCipher {
     static encode(shift, text) {
         return 'BCD'
     }
 }
-module.exports = CeasarsCipher 
+module.exports = CaesarsCipher 
 ```
 
 Note: Here we just setup the class with a static method, returing the very same result we expected. The test turns green.
@@ -166,16 +166,16 @@ So we need also further tests to determine the concrete behaviour of our product
 ??HORIZONTAL
 ### A second test
 ```javascript
-const CeasarsCipher = require('ceasars-cipher.js')
+const CaesarsCipher = require('caesars-cipher.js')
 
-describe('ceasars-cipher', () => {
+describe('caesars-cipher', () => {
     describe('encode', () => {
         it('should encode "ABC" to "BCD"', () => {
-            expect(CeasarsCipher.encode(1, 'ABC')).toBe('BCD')
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
         })
 
         it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
-            expect(CeasarsCipher.encode(1, 'HELLOWORLD')).toBe('IFMMPXPSME')
+            expect(CaesarsCipher.encode(1, 'HELLOWORLD')).toBe('IFMMPXPSME')
         })
     })
 }) 
@@ -189,7 +189,7 @@ Note: So this brings us to the last step of the Red-Green-Cycle: Refactoring. Af
 ??HORIZONTAL
 ### A far better solution
 ```JavaScript
-class CeasarsCipher {
+class CaesarsCipher {
     static encode(shift, text) {
         let result = "";
         for (let i = 0; i < text.length; i++) {
@@ -198,7 +198,7 @@ class CeasarsCipher {
         return result;
     }
 }
-module.exports = CeasarsCipher 
+module.exports = CaesarsCipher 
 ```
 
 ??HORIZONTAL
@@ -209,9 +209,9 @@ Note: So you see it makes sense to write as many tests as you need to describe t
 ??HORIZONTAL
 ### Parametrised tests
 ```javascript
-const CeasarsCipher = require('ceasars-cipher.js')
+const CaesarsCipher = require('caesars-cipher.js')
 
-describe('ceasars-cipher', () => {
+describe('caesars-cipher', () => {
     describe('encode', () => {
 
         [
@@ -220,7 +220,7 @@ describe('ceasars-cipher', () => {
             { shift: 1, input: 'XYZ', output: 'YZA'},
         ].forEach((setup) => {
             it(`should encode "${setup.input}" to "${setup.output}"`, () => {
-                expect(CeasarsCipher.encode(setup.shift, setup.input))
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
                     .toBe(setup.output)
             })
         })
@@ -240,7 +240,7 @@ function toAlphabetIndex (text) {
         .map((ch) => _alphabet.indexOf(ch) )
 }
 
-class CeasarsCipher {
+class CaesarsCipher {
     static encode(shift, message) {
         let key =  _alphabet
                 .slice(shift)
@@ -265,22 +265,22 @@ Wouldn't it be great to let the computer think of all variants we might forget? 
 ??HORIZONTAL
 ### Undoing encode is decode
 ```javascript
-    class CeasarsCipher {
+    class CaesarsCipher {
         static encode(shift, text) {
             ...
         }
 
         static decode(shift, text) {
-            return CeasarsCipher.encode(_alphabet.length - shift ,text)
+            return CaesarsCipher.encode(_alphabet.length - shift ,text)
         }
     }
 ```
 Note: So in our case, after we encoded a text, we also want to decode it. And the result of decode should be the very same text, that we before put into encode. 
 
 ??HORIZONTAL
-## ceasars-cipher.pbt.js
+## caesars-cipher.pbt.js
 ```javascript
-    const CeasarsCipher = require('./ceasars-cipher.js')
+    const CaesarsCipher = require('./caesars-cipher.js')
     const jsc = require('jsverify')
 
     describe('invariant', () =>  {
@@ -289,8 +289,8 @@ Note: So in our case, after we encoded a text, we also want to decode it. And th
                 jsc.integer,
                 jsc.string,
                 (shift, text) => {
-                    const encoded = CeasarsCipher.encode(shift, text)
-                    const decoded = CeasarsCipher.decode(shift, encoded)
+                    const encoded = CaesarsCipher.encode(shift, text)
+                    const decoded = CaesarsCipher.decode(shift, encoded)
                     return text === decoded
                 }
             )
@@ -355,7 +355,7 @@ Note: Let's fix it by clearifing in which range of values the algorithm is prope
 ??HORIZONTAL
 ### Adopted invariant test
 ```javascript
-    const CeasarsCipher = require('./ceasars-cipher.js')
+    const CaesarsCipher = require('./caesars-cipher.js')
     const jsc = require('jsverify')
 
     describe('invariant', () =>  {
@@ -366,8 +366,8 @@ Note: Let's fix it by clearifing in which range of values the algorithm is prope
                     return text.match(/^[A-Z]*$/)
                 },
                 (shift, text) => {
-                    const encoded = CeasarsCipher.encode(shift, text)
-                    const decoded = CeasarsCipher.decode(shift, encoded)
+                    const encoded = CaesarsCipher.encode(shift, text)
+                    const decoded = CaesarsCipher.decode(shift, encoded)
                     return text === decoded
                 }
             )
@@ -407,7 +407,7 @@ class CeasasCipher
 }
 
 ```
-Note: Let's say our ceasar-cipher-class needs to write to a logger when somebody failed in passing a correct message object to the encode-method. The logger might do whatever in that call like writing the info to a database, doing a console.log or turn the alert lights in your headquater to red. This is a side effect. This is nothing, we can check by exploring the output of a method. And it must not be of any concerns for ceasars-cipher what exactly logger does here. It is just important, that the right method of logger got called.
+Note: Let's say our caesar-cipher-class needs to write to a logger when somebody failed in passing a correct message object to the encode-method. The logger might do whatever in that call like writing the info to a database, doing a console.log or turn the alert lights in your headquater to red. This is a side effect. This is nothing, we can check by exploring the output of a method. And it must not be of any concerns for caesars-cipher what exactly logger does here. It is just important, that the right method of logger got called.
 
 ??HORIZONTAL
 ### Monkey Patching
@@ -441,17 +441,17 @@ So you might say, this is a pretty feature of the language. But if you can not e
 ??HORIZONTAL
 ### Mocking with Jest
 ```JavaScript
-const CeasarsCipher = require('./ceasars-cipher')
+const CaesarsCipher = require('./caesars-cipher')
 
 jest.mock('./logger')
 const logger = require('./logger')
 
-describe('CeasarsCipher', () => {
+describe('CaesarsCipher', () => {
     describe('encode', () => {
         it('should call logger on wrong shift value', () => {
             const corruptShift = 27
             expect(() => { 
-                CeasarsCipher.encode(corruptShift, 'ABC')
+                CaesarsCipher.encode(corruptShift, 'ABC')
             }).toThrow()
             expect(logger.error).toHaveBeenCalled()
         })
@@ -465,11 +465,11 @@ So after provoking an error in the method and checking that this throws an excep
 
 
 ??HORIZONTAL
-### ceasars-cipher.js
+### caesars-cipher.js
 ```JavaScript
 const Logger = require('./logger')
 
-class CeasarsCipher {
+class CaesarsCipher {
     constructor() {
         this.logger = new Logger();
     }
@@ -486,23 +486,23 @@ class CeasarsCipher {
 }
 ```
 
-Note: But lets say, logger would not be used as a singleton. Instead it would get generated dynamically in ceasars-cipher class itself. 
+Note: But lets say, logger would not be used as a singleton. Instead it would get generated dynamically in caesars-cipher class itself. 
 
 * First of all this would mean to turn our nice static methods into state tainted methods.
 
 ??HORIZONTAL
-### ceasars-cipher.spec.js
+### caesars-cipher.spec.js
 ```JavaScript
-const CeasarsCipher = require('./ceasars-cipher')
+const CaesarsCipher = require('./caesars-cipher')
 const Logger = require('./logger')
 
-describe('CeasarsCipher', () => {
+describe('CaesarsCipher', () => {
     describe('encode', () => {
-        let mockError, ceasarsCipher
+        let mockError, caesarsCipher
         beforeEach(() => {
             mockError = jest.spyOn(Logger.prototype, 'error')
             mockError.mockImplementation(() => {})
-            ceasarsCipher = new CeasarsCipher()
+            caesarsCipher = new CaesarsCipher()
         })
 
         afterEach(() => {
@@ -511,7 +511,7 @@ describe('CeasarsCipher', () => {
         it('should call logger on wrong shift value', () => {
             const corruptShift = 27
             expect(() => { 
-                CeasarsCipher.encode(corruptShift, 'ABC')
+                CaesarsCipher.encode(corruptShift, 'ABC')
             }).toThrow()
             expect(Logger.prototype.error).toHaveBeenCalled()
         })
@@ -536,9 +536,9 @@ As you can see mocking dynamically created objects, get more complex.
 -> In addition, this kind of mocking comes with a code smell. It means that you hardcoded a dependency. You miss an opportunity to apply the open closed principle by that. Otherwise you could modify the behaviour of this class just by passing in another dependency that provides similar functionality.
 
 ??HORIZONTAL
-### ceasars-cipher.js
+### caesars-cipher.js
 ```JavaScript
-class CeasarsCipher {
+class CaesarsCipher {
     constructor({ logger }) {
         this.logger = logger;
     }
@@ -560,41 +560,41 @@ Here we used deconstruction defined since ES6. It means that you put in an objec
 
 
 ??HORIZONTAL
-### ceasars-cipher.spec.js
+### caesars-cipher.spec.js
 ```JavaScript
-const CeasarsCipher = require('./ceasars-cipher')
+const CaesarsCipher = require('./caesars-cipher')
 
-describe('CeasarsCipher', () => {
+describe('CaesarsCipher', () => {
     describe('encode', () => {
-        let logger, ceasarsCipher
+        let logger, caesarsCipher
         beforeEach(() => {
             logger = {
                 error: jest.fn()
             }
-            ceasarsCipher = new CeasarsCipher({ logger })
+            caesarsCipher = new CaesarsCipher({ logger })
         })
 
         it('should call logger on wrong shift value', () => {
             const corruptShift = 27
             expect(() => { 
-                CeasarsCipher.encode(corruptShift, 'ABC')
+                CaesarsCipher.encode(corruptShift, 'ABC')
             }).toThrow()
             expect(logger.error).toHaveBeenCalled()
         })
     })
 })
 ```
-Note: Now we have full controll over the testsetup. We do not need to clean up the mock, because it gets rebuild for each test. The tests do no longer depend on Logger module or the path to it, which means we are free to move ceasars-cipher.js and ceasars-cipher.spec.js whereever we want. This test is far more resillient since it only breaks if its own code breaks. 
+Note: Now we have full controll over the testsetup. We do not need to clean up the mock, because it gets rebuild for each test. The tests do no longer depend on Logger module or the path to it, which means we are free to move caesars-cipher.js and caesars-cipher.spec.js whereever we want. This test is far more resillient since it only breaks if its own code breaks. 
 
 
 ??HORIZONTAL
 ### app.js
 ```JavaScript
-const CeasarsCipher = require('./ceasars-cipher')
+const CaesarsCipher = require('./caesars-cipher')
 const logger = require('./logger')
 
-const ceasarsCipher = new CeasarsCipher(logger)
-console.log(ceasarsCipher.encode(1, process.argv[2]))
+const caesarsCipher = new CaesarsCipher(logger)
+console.log(caesarsCipher.encode(1, process.argv[2]))
 ```
 Note: But now that each of our modules work independently how should we run the complete Program? We need now something that wires all the modules together. In this case I called it app.js but you will find similar files like server.js in your application. They are what in a classic C Programm was the main-method. It wraps up the start point for the complete application.
 This part of the application can not or only with much effort be tested by unit tests. So we do not automatically test it. But this code should be as thin as possible.
@@ -609,18 +609,18 @@ const { createContainer, asClass } = require('awilix')
 const container = createContainer()
 
 container.register({
-    ceasarsCipher: asClass(require('./ceasars-cipher')),
+    caesarsCipher: asClass(require('./caesars-cipher')),
     logger: asClass(require('./logger'))
 })
 
-const ceasarsCipher = container.resolve('ceasarsCipher')
-console.log(ceasarsCipher.encode(1, process.argv[2]))
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
 ```
 Note: That is the reason why we should use a Dependency Injection Framework like awilix for JavaScript. Since we do not have valid type information in JavaScript, DI can not validly depend on it like it does in Java or Angular/Typescript. It has two Injection Modes:
 * By Proxy: This the default option and it expects the constructor of your classes to take a parameter object that contains the dependencies. Depending on the names used in this parameter objects, it identifies which Dependencies to build and inject.
 * CLASSIC: This works the same way as DI worked in Angular1. The parameternames of a constructor get analysed and used to identify dependencies. The Problem with this approach is, that you can not minify the code, since the variable and parameter names will be renamed in that process. 
 So here we create a DI-Container and register relevant classes or if you are familiar with functional programming, which I really recommend to you for JavaScript, you can also register Functions or plain values to it.
-container.resolve will instantiate a CeasarsCipher-Object for us with the necessary dependencies and that we can call as before.
+container.resolve will instantiate a CaesarsCipher-Object for us with the necessary dependencies and that we can call as before.
 
 This is what I want to reach Santa. If we have this deep level and quality of UnitTesting everywhere, we really only need one or two E2E-Tests to check the happy path. Or we might even omit them and test manually since the only thing that should break now is the configuration.
 
@@ -642,7 +642,7 @@ Note: Here we see the short coverage report for all tested files. It shows three
 * The Branches-Column means the same for all if and else statements in your code.
 * Similar is true Functions-Column and the Lines-Column
 
-So besides our already known ceasar-ciphers, we see also the file calc.js which seems to have some trouble. 
+So besides our already known caesar-ciphers, we see also the file calc.js which seems to have some trouble. 
 
 ??HORIZONTAL
 ### calc.js
