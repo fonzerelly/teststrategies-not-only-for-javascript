@@ -455,6 +455,140 @@ class CaesarsCipher {
 }
                 </code></pre>
             </section>
+
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+<mark>const jsc = require('jsverify')</mark>
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                    </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = <mark>jsc.checkForall</mark>(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                        </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            <mark>jsc.integer,</mark>
+            <mark>jsc.string,</mark>
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                            </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                <mark>const encoded = CaesarsCipher.encode(shift, text)</mark>
+                <mark>const decoded = CaesarsCipher.decode(shift, encoded)</mark>
+                <mark>return text === decoded</mark>
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        <mark>expect(outcome).toBe(true)</mark>
+    })
+})
+                </code></pre>
+            </section>
+
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
