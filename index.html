@@ -868,6 +868,91 @@ obj.foo() <mark>//foo bar</mark>
             
                 </code></pre>
             </section>
+
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+<mark>jest.mock('./logger')</mark>
+const logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+    const CaesarsCipher = require('./caesars-cipher')
+    
+    jest.mock('./logger')
+    <mark>const logger = require('./logger')</mark>
+    
+    describe('CaesarsCipher', () => {
+        describe('encode', () => {
+            it('should call logger on wrong shift value', () => {
+                const corruptShift = 27
+                expect(() => { 
+                    CaesarsCipher.encode(corruptShift, 'ABC')
+                }).toThrow()
+                expect(logger.error).toHaveBeenCalled()
+            })
+        })
+    })
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+        const CaesarsCipher = require('./caesars-cipher')
+        
+        jest.mock('./logger')
+        const logger = require('./logger')
+        
+        describe('CaesarsCipher', () => {
+            describe('encode', () => {
+                it('should call logger on wrong shift value', () => {
+                    const corruptShift = 27
+                    <mark>expect(() => { </mark>
+                    <mark>    CaesarsCipher.encode(corruptShift, 'ABC')</mark>
+                    <mark>}).toThrow()</mark>
+                    expect(logger.error).toHaveBeenCalled()
+                })
+            })
+        })
+                </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+jest.mock('./logger')
+const logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            <mark>expect(logger.error).toHaveBeenCalled()</mark>
+        })
+    })
+})
+                </code></pre>
+            </section>
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
