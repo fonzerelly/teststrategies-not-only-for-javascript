@@ -135,7 +135,7 @@
                     class CaesarsCipher {
                         static encode(shift, text) {
                             let result = ""
-                            for (let i = 0; i &gt; text.length; i++) {
+                            for (let i = 0; i &lt; text.length; i++) {
                                 result += String.fromCharCode(text.charCodeAt(i) + shift)
                             }
                             return result
@@ -150,7 +150,7 @@
                     class CaesarsCipher {
                         static encode(shift, text) {
                             let result = ""
-                            for (let i = 0; <mark>i &gt; text.length</mark>; i++) {
+                            for (let i = 0; <mark>i &lt; text.length</mark>; i++) {
                                 result += String.fromCharCode(text.charCodeAt(i) + shift)
                             }
                             return result
@@ -165,7 +165,7 @@
                     class CaesarsCipher {
                         static encode(shift, text) {
                             let result = ""
-                            for (let i = 0; i &gt; text.length; i++) {
+                            for (let i = 0; i &lt; text.length; i++) {
                                 result += String.fromCharCode(<mark>text.charCodeAt(i) + shift</mark>)
                             }
                             return result
@@ -180,7 +180,7 @@
                     class CaesarsCipher {
                         static encode(shift, text) {
                             let result = ""
-                            for (let i = 0; i &gt; text.length; i++) {
+                            for (let i = 0; i &lt; text.length; i++) {
                                 result += <mark>String.fromCharCode</mark>  (text.charCodeAt(i) + shift)
                             }
                             return result
@@ -588,7 +588,203 @@ describe('invariant', () =>  {
 })
                 </code></pre>
             </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    <mark>"counterexample": [0, "\u0000"],</mark>
+    <mark>"counterexample": [0, "\u0000"],</mark>
+    "counterexamplestr": "0; \"\\u0000\"",
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                    </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    <mark>"shrinks": 12,</mark>
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    <mark>"rngState": "83df0385ec9672a1b4 "</mark>
+}
+                </code></pre>
+            </section>
 
+            <section>
+                <h3>What JSVERIFY tells us II</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [27, "A"],
+    "counterexamplestr": "27; \"A\"",
+    "shrinks": 5,
+    "exc": false,
+    "tests": 11,
+    "rngState": "09b2da8c1e9530f764"
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>What JSVERIFY tells us II</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": <mark>[27, "A"]</mark>,
+    "counterexamplestr": "27; \"A\"",
+    "shrinks": 5,
+    "exc": false,
+    "tests": 11,
+    "rngState": "09b2da8c1e9530f764"
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    if (shift &lt; 0 || shift &gt; 26) {
+        throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)
+    }
+    if (!(message instanceof Message)) {
+        throw new TypeError(`"${message}" is no valid Message!`)
+    }
+    ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    <mark>if (shift &lt; 0 || shift &gt; 26) {</mark>
+    <mark>    throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)</mark>
+    <mark>}</mark>
+    if (!(message instanceof Message)) {
+        throw new TypeError(`"${message}" is no valid Message!`)
+    }
+    ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    if (shift &lt; 0 || shift &gt; 26) {
+        throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)
+    }
+    <mark>if (!(message instanceof Message)) {</mark>
+    <mark>    throw new TypeError(`"${message}" is no valid Message!`)</mark>
+    <mark>}</mark>
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            <mark>jsc.nat(26)</mark>, //only positive values up to 26
+            jsc.sothat(jsc.asciistring, (text) => {
+                return text.match(/^[A-Z]*$/)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.nat(26), //only positive values up to 26
+            jsc.sothat(<mark>jsc.asciistring</mark>, (text) => {
+                return text.match(/^[A-Z]*$/)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.nat(26), //only positive values up to 26
+            <mark>jsc.sothat</mark>(jsc.asciistring, (text) => {
+                return text.match(<mark>/^[A-Z]*$/</mark>)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
