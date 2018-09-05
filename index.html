@@ -785,6 +785,89 @@ describe('invariant', () =>  {
 })
                 </code></pre>
             </section>
+
+            <section>
+                <h3>What we want to test for</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+            <mark>const logger = require('./logger')</mark>
+            class CaesarsCipher
+                static encode(shift, message) {
+                    if (shift &lt; 0 || shift &gt; 26) {
+                        const msg = `"${shift}" is no valid shift parameter!`
+                        <mark>logger.error(msg)</mark>
+                        throw new TypeError(msg)
+                    }
+                    ...
+                }
+                ...
+            }
+            
+    </code></pre>
+            </section>
+
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    foo: () => {
+        console.log('foo')
+    }
+}
+
+obj.foo() // foo
+
+const origFoo = obj.foo
+obj.foo = () => {
+    origFoo()
+    console.log('bar')
+}
+
+obj.foo() //foo bar
+            
+                </code></pre>
+            </section>
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    <mark>foo: () => {</mark>
+    <mark>    console.log('foo')</mark>
+    <mark>}</mark>
+}
+
+obj.foo() <mark>// foo</mark>
+
+const origFoo = obj.foo
+obj.foo = () => {
+    origFoo()
+    console.log('bar')
+}
+
+obj.foo() //foo bar
+                
+                </code></pre>
+            </section>
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    foo: () => {
+        console.log('foo')
+    }
+}
+
+obj.foo() // foo
+
+const origFoo = obj.foo
+<mark>obj.foo = () => {</mark>
+<mark>    origFoo()</mark>
+<mark>    console.log('bar')</mark>
+<mark>}</mark>
+
+obj.foo() <mark>//foo bar</mark>
+            
+                </code></pre>
+            </section>
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
