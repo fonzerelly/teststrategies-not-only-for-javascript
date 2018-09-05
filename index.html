@@ -26,51 +26,56 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <!-- <section data-markdown="introduction.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
+            <section data-markdown="introduction.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
                 data-charset="UTF-8">
-            </section> -->
+            </section>
             <section>
                 <h3>caesars-cipher.spec.js</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
-                    const CaesarsCipher = require('./caesars-cipher')
+const CaesarsCipher = require('./caesars-cipher')
 
-                    describe('caesars-cipher', () => {
-                        describe('encode', () => {
-                            it(`should encode 'ABC' to 'BCD'`, () => {
-                                expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
-                            })
-                        })
-                    })
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+        })
+    })
+})
             </code></pre>
             </section>
             <section>
                 <h3>caesars-cipher.spec.js</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
-                        const CaesarsCipher = require('./caesars-cipher')
-    
-                        describe('caesars-cipher', () => {
-                            describe('encode', () => {
-                                it(`should encode 'ABC' to 'BCD'`, () => {
-                                    expect(CaesarsCipher.encode(1, <mark>'ABC'</mark>)).toBe('BCD')
-                                })
-                            })
-                        })
+const CaesarsCipher = require('./caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, <mark>'ABC'</mark>)).toBe('BCD')
+        })
+    })
+})
                 </code></pre>
             </section>
             <section>
                 <h3>caesars-cipher.spec.js</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
-                            const CaesarsCipher = require('./caesars-cipher')
-        
-                            describe('caesars-cipher', () => {
-                                describe('encode', () => {
-                                    it(`should encode 'ABC' to 'BCD'`, () => {
-                                        expect(CaesarsCipher.encode(1, 'ABC')).toBe(<mark>'BCD'</mark>)
-                                    })
-                                })
-                            })
+const CaesarsCipher = require('./caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe(<mark>'BCD'</mark>)
+        })
+    })
+})
                     </code></pre>
             </section>
+            <section>
+                <h3>Red-Green-Cycle II</h3>
+                <img src="images/tdd-2-green.jpg" width="50%">
+            </section>
+            
             <section>
                 <h3>caesars-cipher.js</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
@@ -93,6 +98,8 @@
                     module.exports = CaesarsCipher 
                     </code></pre>
             </section>
+            <section data-markdown="triangulation.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:" data-charset="UTF-8">
+                </section>
             <section>
                 <h3>A second test</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
@@ -128,6 +135,10 @@
                             })
                         })
                     </code></pre>
+            </section>
+            <section>
+                <h3>Red-Green-Cycle III</h3>
+                <img src="images/tdd-3-refactor.jpg" width="50%">
             </section>
             <section>
                 <h3>A far better solution</h3>
@@ -188,6 +199,10 @@
                     }
                     module.exports = CaesarsCipher 
                 </code></pre>
+            </section>
+            <section>
+                <h3>Test more Write less</h3>
+                <img src="images/parametrized-tests.jpg" width="50%">
             </section>
             <section>
                 <h3>Parametrised tests</h3>
@@ -411,7 +426,10 @@ class CaesarsCipher {
 module.exports = CaesarsCipher
                 </code></pre>
             </section>
-
+<section>
+    <h3>Property Based Testing</h3>
+    <img src="images/property-based-testing.jpg" width="50%">
+</section>
             <section>
                 <h3>Undoing encode is decode</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
@@ -784,7 +802,19 @@ describe('invariant', () =>  {
 })
                 </code></pre>
             </section>
+<section data-markdown><textarea data-template>
+### BUT... 
+* it is not applicable for every algorithm <!-- .element: class="fragment" -->
+* it works best for revertable operations <!-- .element: class="fragment" -->
+* it works for idempotent results <!-- .element: class="fragment" -->
 
+Note: So you see, it is extremly helpful, to test your methods with property based testing. BUT it is not applicable to every algorithm. It works best for operations, that are revertable or that produce invariant idempodent results. If you are not working in pure functional environment, you probably need to plug different classes and services together so how can you properly test this issues.
+        
+</textarea></section>
+<section>
+    <h3>Interaction with other Units</h3>
+    <img src="images/dependency-injection.jpg" width="50%">
+</section>
             <section>
                 <h3>What we want to test for</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
@@ -1034,7 +1064,18 @@ describe('CaesarsCipher', () => {
 })
                 </code></pre>
             </section>
-
+<section data-markdown><textarea data-template>
+        ### BUT ...
+        * mocking dynamic objects is complex <!-- .element: class="fragment" -->
+        * overwriting require leads to hard bug anlysis <!-- .element: class="fragment" -->
+        * codesmell due to hardcoded dependencies <!-- .element: class="fragment" -->
+        
+        Note:
+        As you can see mocking dynamically created objects, get more complex.
+        -> Overwriting require as jest.mock does can lead to bugs that are hard to find. My experience with similar tools like testdouble or proxyquire introduced me often to errors I could not resolve. Therefore I want to discourage this kind of mocking
+        -> In addition, this kind of mocking comes with a code smell. It means that you hardcoded a dependency. You miss an opportunity to apply the open closed principle by that. Otherwise you could modify the behaviour of this class just by passing in another dependency that provides similar functionality.
+        
+</textarea></section>
             <section>
                 <h3>caesars-cipher.js</h3>
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
@@ -1239,6 +1280,9 @@ container.register({
 const caesarsCipher = <mark>container.resolve('caesarsCipher')</mark>
 console.log(caesarsCipher.encode(1, process.argv[2]))
                 </code></pre>
+            </section>
+            <section data-markdown="test-enough.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
+                data-charset="UTF-8">
             </section>
             <section>
                 <h1>Thank you</h1>
