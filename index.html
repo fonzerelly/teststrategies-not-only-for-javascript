@@ -953,6 +953,29 @@ describe('CaesarsCipher', () => {
 })
                 </code></pre>
             </section>
+
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const Logger = require('./logger')
+
+class CaesarsCipher {
+    constructor() {
+        this.logger = <mark>new Logger();</mark>
+    }
+
+    encode(shift, message) {
+        if (shift < 0 || shift > 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+                </code></pre>
+            </section>
             <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
