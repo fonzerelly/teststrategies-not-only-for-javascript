@@ -1,13 +1,13 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/css/zenburn.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
     <!-- will fail when released -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
     <!-- will fial when in development-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.min.css">
     <meta charset="UTF-8">
     <style>
         .reveal section img {
@@ -30,6 +30,1261 @@
                 data-charset="UTF-8">
             </section>
             <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+        })
+    })
+})
+            </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, <mark>'ABC'</mark>)).toBe('BCD')
+        })
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        it(`should encode 'ABC' to 'BCD'`, () => {
+            expect(CaesarsCipher.encode(1, 'ABC')).toBe(<mark>'BCD'</mark>)
+        })
+    })
+})
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Red-Green-Cycle II</h3>
+                <img src="images/tdd-2-green.jpg" width="50%">
+            </section>
+            
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            return 'BCD'
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            <mark>return 'BCD'</mark>
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                    </code></pre>
+            </section>
+            <section data-markdown="triangulation.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:" data-charset="UTF-8">
+                </section>
+            <section>
+                <h3>A second test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    const CaesarsCipher = require('caesars-cipher.js')
+
+                    describe('caesars-cipher', () => {
+                        describe('encode', () => {
+                            it('should encode "ABC" to "BCD"', () => {
+                                expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+                            })
+                    
+                            it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
+                                expect(CaesarsCipher.encode(1, 'HELLOWORLD')).toBe('IFMMPXPSME')
+                            })
+                        })
+                    })
+                </code></pre>
+            </section>
+            <section>
+                <h3>A second test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                        const CaesarsCipher = require('caesars-cipher.js')
+    
+                        describe('caesars-cipher', () => {
+                            describe('encode', () => {
+                                it('should encode "ABC" to "BCD"', () => {
+                                    expect(CaesarsCipher.encode(1, 'ABC')).toBe('BCD')
+                                })
+                        
+                                it('should encode "HELLOWORLD" to "IFMMPXPSME"', () => {
+                                    expect(CaesarsCipher.encode(1, <mark>'HELLOWORLD'</mark>)).toBe(<mark>'IFMMPXPSME'</mark>)
+                                })
+                            })
+                        })
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Red-Green-Cycle III</h3>
+                <img src="images/tdd-3-refactor.jpg" width="50%">
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &lt; text.length; i++) {
+                                result += String.fromCharCode(text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; <mark>i &lt; text.length</mark>; i++) {
+                                result += String.fromCharCode(text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &lt; text.length; i++) {
+                                result += String.fromCharCode(<mark>text.charCodeAt(i) + shift</mark>)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>A far better solution</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+                    class CaesarsCipher {
+                        static encode(shift, text) {
+                            let result = ""
+                            for (let i = 0; i &lt; text.length; i++) {
+                                result += <mark>String.fromCharCode</mark>  (text.charCodeAt(i) + shift)
+                            }
+                            return result
+                        }
+                    }
+                    module.exports = CaesarsCipher 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Test more Write less</h3>
+                <img src="images/parametrized-tests.jpg" width="50%">
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { <mark>shift: 1</mark>, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(<mark>setup.shift</mark>, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+})
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, <mark>input: 'ABC'</mark>, output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${<mark>setup.input</mark>}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, <mark>setup.input</mark>))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', <mark>output: 'BCD'</mark> },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${<mark>setup.output</mark>}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(<mark>setup.output</mark>)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            <mark>{ shift: 1, input: 'ABC', output: 'BCD' },</mark>
+            <mark>{ shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },</mark>
+            { shift: 1, input: 'XYZ', output: 'YZA'},
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                </code></pre>
+            </section>
+            <section>
+                <h3>Parametrised tests</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('caesars-cipher')
+
+describe('caesars-cipher', () => {
+    describe('encode', () => {
+        [
+            { shift: 1, input: 'ABC', output: 'BCD' },
+            { shift: 1, input: 'HELLOWORLD', output: 'IFMMPXPSME' },
+            <mark>{ shift: 1, input: 'XYZ', output: 'YZA'},</mark>
+        ].forEach((setup) => {
+            it(`should encode "${setup.input}" to "${setup.output}"`, () => {
+                expect(CaesarsCipher.encode(setup.shift, setup.input))
+                    .toBe(setup.output)
+            })
+        })
+    })
+}) 
+                    </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  _alphabet
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return toAlphabetIndex(text).map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+<mark>const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']</mark>
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  <mark>_alphabet</mark>
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return toAlphabetIndex(text).map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+<mark>function toAlphabetIndex (text) {</mark>
+<mark>    return text.split('')</mark>
+<mark>        .map((ch) => _alphabet.indexOf(ch))</mark>
+<mark>}</mark>
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        let key =  _alphabet
+                .slice(shift)
+                .concat(_alphabet.slice(0, shift))
+
+        return <mark>toAlphabetIndex(text)</mark>.map((index) => {
+            return key[index]
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+            <section>
+                <h3>More Refactoring</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const _alphabet = ['A', 'B', /*...,*/ 'Y', 'Z']
+
+function toAlphabetIndex (text) {
+    return text.split('')
+        .map((ch) => _alphabet.indexOf(ch))
+}
+
+class CaesarsCipher {
+    static encode(shift, text) {
+        <mark>let key =  _alphabet</mark>
+        <mark>        .slice(shift)</mark>
+        <mark>        .concat(_alphabet.slice(0, shift))</mark>
+
+        return toAlphabetIndex(text).map((index) => {
+            <mark>return key[index]</mark>
+        }).join('')
+    }
+}
+module.exports = CaesarsCipher
+                </code></pre>
+            </section>
+<section>
+    <h3>Property Based Testing</h3>
+    <img src="images/property-based-testing.jpg" width="50%">
+</section>
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    static decode(shift, text) {
+        return CaesarsCipher.encode(_alphabet.length - shift ,text)
+    }
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    <mark>static decode(shift, text) {</mark>
+    <mark>    return CaesarsCipher.encode(_alphabet.length - shift ,text)</mark>
+    <mark>}</mark>
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>Undoing encode is decode</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    static encode(shift, text) {
+        ...
+    }
+
+    static decode(shift, text) {
+        return CaesarsCipher.encode(<mark>_alphabet.length - shift</mark> ,text)
+    }
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+<mark>const jsc = require('jsverify')</mark>
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                    </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = <mark>jsc.checkForall</mark>(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                        </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            <mark>jsc.integer,</mark>
+            <mark>jsc.string,</mark>
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                            </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                <mark>const encoded = CaesarsCipher.encode(shift, text)</mark>
+                <mark>const decoded = CaesarsCipher.decode(shift, encoded)</mark>
+                <mark>return text === decoded</mark>
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.pbt.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.integer,
+            jsc.string,
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        <mark>expect(outcome).toBe(true)</mark>
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    <mark>"counterexample": [0, "\u0000"],</mark>
+    <mark>"counterexamplestr": "0; \"\\u0000\"",</mark>
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                    </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    <mark>"shrinks": 12,</mark>
+    "exc": false,
+    "tests": 2,
+    "rngState": "83df0385ec9672a1b4 "
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>What JSVerify tells us</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [0, "\u0000"],
+    "counterexamplestr": "0; \"\\u0000\"",
+    "shrinks": 12,
+    "exc": false,
+    "tests": 2,
+    <mark>"rngState": "83df0385ec9672a1b4 "</mark>
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>What JSVERIFY tells us II</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": [27, "A"],
+    "counterexamplestr": "27; \"A\"",
+    "shrinks": 5,
+    "exc": false,
+    "tests": 11,
+    "rngState": "09b2da8c1e9530f764"
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>What JSVERIFY tells us II</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+{
+    "counterexample": <mark>[27, "A"]</mark>,
+    "counterexamplestr": "27; \"A\"",
+    "shrinks": 5,
+    "exc": false,
+    "tests": 11,
+    "rngState": "09b2da8c1e9530f764"
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    if (shift &lt; 0 || shift &gt; 26) {
+        throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)
+    }
+    if (!(message instanceof Message)) {
+        throw new TypeError(`"${message}" is no valid Message!`)
+    }
+    ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    <mark>if (shift &lt; 0 || shift &gt; 26) {</mark>
+    <mark>    throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)</mark>
+    <mark>}</mark>
+    if (!(message instanceof Message)) {
+        throw new TypeError(`"${message}" is no valid Message!`)
+    }
+    ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h3>A solution to the issues</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+static encode(shift, message) {
+    if (shift &lt; 0 || shift &gt; 26) {
+        throw new Error (`Only shifts between 0 and 26 are allowed: ${shift}`)
+    }
+    <mark>if (!(message instanceof Message)) {</mark>
+    <mark>    throw new TypeError(`"${message}" is no valid Message!`)</mark>
+    <mark>}</mark>
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            <mark>jsc.nat(26)</mark>, //only positive values up to 26
+            jsc.sothat(jsc.asciistring, (text) => {
+                return text.match(/^[A-Z]*$/)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.nat(26), //only positive values up to 26
+            jsc.sothat(<mark>jsc.asciistring</mark>, (text) => {
+                return text.match(/^[A-Z]*$/)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Adopted invariant test</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher.js')
+const jsc = require('jsverify')
+
+describe('invariant', () =>  {
+    it('should hold true for any parameter', () => {
+        const outcome = jsc.checkForall(
+            jsc.nat(26), //only positive values up to 26
+            <mark>jsc.sothat</mark>(jsc.asciistring, (text) => {
+                return text.match(<mark>/^[A-Z]*$/</mark>)
+            },
+            (shift, text) => {
+                const encoded = CaesarsCipher.encode(shift, text)
+                const decoded = CaesarsCipher.decode(shift, encoded)
+                return text === decoded
+            }
+        )
+        expect(outcome).toBe(true)
+    })
+})
+                </code></pre>
+            </section>
+<section data-markdown><textarea data-template>
+### BUT... 
+* it is not applicable for every algorithm <!-- .element: class="fragment" -->
+* it works best for revertable operations <!-- .element: class="fragment" -->
+* it works for idempotent results <!-- .element: class="fragment" -->
+
+Note: So you see, it is extremly helpful, to test your methods with property based testing. BUT it is not applicable to every algorithm. It works best for operations, that are revertable or that produce invariant idempodent results. If you are not working in pure functional environment, you probably need to plug different classes and services together so how can you properly test this issues.
+        
+</textarea></section>
+<section>
+    <h3>Interaction with other Units</h3>
+    <img src="images/dependency-injection.jpg" width="50%">
+</section>
+            <section>
+                <h3>What we want to test for</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+            <mark>const logger = require('./logger')</mark>
+            class CaesarsCipher
+                static encode(shift, message) {
+                    if (shift &lt; 0 || shift &gt; 26) {
+                        const msg = `"${shift}" is no valid shift parameter!`
+                        <mark>logger.error(msg)</mark>
+                        throw new TypeError(msg)
+                    }
+                    ...
+                }
+                ...
+            }
+            
+    </code></pre>
+            </section>
+
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    foo: () => {
+        console.log('foo')
+    }
+}
+
+obj.foo() // foo
+
+const origFoo = obj.foo
+obj.foo = () => {
+    origFoo()
+    console.log('bar')
+}
+
+obj.foo() //foo bar
+            
+                </code></pre>
+            </section>
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    <mark>foo: () => {</mark>
+    <mark>    console.log('foo')</mark>
+    <mark>}</mark>
+}
+
+obj.foo() <mark>// foo</mark>
+
+const origFoo = obj.foo
+obj.foo = () => {
+    origFoo()
+    console.log('bar')
+}
+
+obj.foo() //foo bar
+                
+                </code></pre>
+            </section>
+            <section>
+                <h3>Monkey Patching</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const obj = {
+    foo: () => {
+        console.log('foo')
+    }
+}
+
+obj.foo() // foo
+
+const origFoo = obj.foo
+<mark>obj.foo = () => {</mark>
+<mark>    origFoo()</mark>
+<mark>    console.log('bar')</mark>
+<mark>}</mark>
+
+obj.foo() <mark>//foo bar</mark>
+            
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+<mark>jest.mock('./logger')</mark>
+const logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+    const CaesarsCipher = require('./caesars-cipher')
+    
+    jest.mock('./logger')
+    <mark>const logger = require('./logger')</mark>
+    
+    describe('CaesarsCipher', () => {
+        describe('encode', () => {
+            it('should call logger on wrong shift value', () => {
+                const corruptShift = 27
+                expect(() => { 
+                    CaesarsCipher.encode(corruptShift, 'ABC')
+                }).toThrow()
+                expect(logger.error).toHaveBeenCalled()
+            })
+        })
+    })
+                    </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+        const CaesarsCipher = require('./caesars-cipher')
+        
+        jest.mock('./logger')
+        const logger = require('./logger')
+        
+        describe('CaesarsCipher', () => {
+            describe('encode', () => {
+                it('should call logger on wrong shift value', () => {
+                    const corruptShift = 27
+                    <mark>expect(() => { </mark>
+                    <mark>    CaesarsCipher.encode(corruptShift, 'ABC')</mark>
+                    <mark>}).toThrow()</mark>
+                    expect(logger.error).toHaveBeenCalled()
+                })
+            })
+        })
+                </code></pre>
+            </section>
+            <section>
+                <h3>Mocking with Jest</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+jest.mock('./logger')
+const logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            <mark>expect(logger.error).toHaveBeenCalled()</mark>
+        })
+    })
+})
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const Logger = require('./logger')
+
+class CaesarsCipher {
+    constructor() {
+        this.logger = <mark>new Logger();</mark>
+    }
+
+    encode(shift, message) {
+        if (shift < 0 || shift > 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const Logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let mockError, caesarsCipher
+        beforeEach(() => {
+            <mark>mockError = jest.spyOn(Logger.prototype, 'error')</mark>
+            <mark>mockError.mockImplementation(() => {})</mark>
+            caesarsCipher = new CaesarsCipher()
+        })
+
+        afterEach(() => {
+            mockError.mockRestore()
+        })
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(Logger.prototype.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const Logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let mockError, caesarsCipher
+        beforeEach(() => {
+            mockError = jest.spyOn(Logger.prototype, 'error')
+            mockError.mockImplementation(() => {})
+            caesarsCipher = new CaesarsCipher()
+        })
+
+        afterEach(() => {
+            <mark>mockError.mockRestore()</mark>
+        })
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(Logger.prototype.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+<section data-markdown><textarea data-template>
+        ### BUT ...
+        * mocking dynamic objects is complex <!-- .element: class="fragment" -->
+        * overwriting require leads to hard bug anlysis <!-- .element: class="fragment" -->
+        * codesmell due to hardcoded dependencies <!-- .element: class="fragment" -->
+        
+        Note:
+        As you can see mocking dynamically created objects, get more complex.
+        -> Overwriting require as jest.mock does can lead to bugs that are hard to find. My experience with similar tools like testdouble or proxyquire introduced me often to errors I could not resolve. Therefore I want to discourage this kind of mocking
+        -> In addition, this kind of mocking comes with a code smell. It means that you hardcoded a dependency. You miss an opportunity to apply the open closed principle by that. Otherwise you could modify the behaviour of this class just by passing in another dependency that provides similar functionality.
+        
+</textarea></section>
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    constructor({ <mark>logger</mark> }) {
+        this.logger = <mark>logger</mark>;
+    }
+
+    encode(shift, message) {
+        if (shift &lt; 0 || shift &gt; 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+<mark>                                  </mark>
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let logger, caesarsCipher
+        beforeEach(() => {
+            logger = <mark>{</mark>
+            <mark>    error: jest.fn()</mark>
+            <mark>}</mark>
+            caesarsCipher = new CaesarsCipher({ logger })
+        })
+
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+    </code></pre>
+            </section>
+
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let logger, caesarsCipher
+        beforeEach(() => {
+            <mark>logger</mark> = {
+                error: jest.fn()
+            }
+            caesarsCipher = new CaesarsCipher({ <mark>logger</mark> })
+        })
+
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const logger = require('./logger')
+
+const caesarsCipher = new CaesarsCipher({ logger })
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const <mark>logger</mark> = require('./logger')
+
+const caesarsCipher = new CaesarsCipher({ <mark>logger</mark> })
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const logger = require('./logger')
+
+const <mark>caesarsCipher</mark> = new CaesarsCipher({ logger })
+console.log(<mark>caesarsCipher.encode(1, process.argv[2])</mark>)
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('<mark>awilix</mark>')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { <mark>createContainer</mark>, asClass, asValue } = require('awilix')
+
+const container = <mark>createContainer()</mark>
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, <mark>asClass</mark>, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: <mark>asClass(require('./caesars-cipher'))</mark>,
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+<pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, <mark>asValue</mark> } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: <mark>asValue(require('./logger'))</mark>
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    <mark>caesarsCipher</mark>: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = <mark>container.resolve('caesarsCipher')</mark>
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section data-markdown="test-enough.md" data-separator="^\?\?HORIZONTAL" data-separator-vertical="^\?\?VERTICAL" data-separator-notes="^Note:"
+                data-charset="UTF-8">
+            </section>
+            <section>
                 <h1>Thank you</h1>
                 <br><br> Christian H&ouml;rauf<br>
                 <img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
@@ -48,7 +1303,9 @@
                             to Trick OO Programmers into Loving Functional Programming</a> by Nick Santos</li>
                     <li><a href="https://medium.com/@Jeffijoe/dependency-injection-in-node-js-2016-edition-f2a88efdd427">Dependency
                             Injection in Node.js - 2016 Edition</a> by Jeff Hansen</li>
-                    <li><a href="https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c">Understanding Jest Mocks</a> by Rick Hanlon II</li>
+                    <li><a href="https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c">Understanding Jest
+                            Mocks
+                        </a> by Rick Hanlon II</li>
                 </ul>
             </section>
             <section>
@@ -69,12 +1326,12 @@
             </section>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/marked.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/markdown/markdown.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/highlight/highlight.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes/notes.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/plugin/notes-server/client.js"></script>
+    <script src="node_modules/reveal.js/js/reveal.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/marked.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes-server/client.js"></script>
     <script>
         Reveal.initialize({
             controls: false,
@@ -91,7 +1348,7 @@
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css' : 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'node_modules/reveal.js/css/print/pdf.css' : 'node_modules/reveal.js/css/print/paper.css';
         document.getElementsByTagName('head')[0].appendChild(link);
     </script>
 </body>
