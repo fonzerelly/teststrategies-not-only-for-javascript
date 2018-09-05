@@ -606,8 +606,7 @@ describe('invariant', () =>  {
                 <pre><code class="lang-JavaScript" data-trim data-noescape>
 {
     <mark>"counterexample": [0, "\u0000"],</mark>
-    <mark>"counterexample": [0, "\u0000"],</mark>
-    "counterexamplestr": "0; \"\\u0000\"",
+    <mark>"counterexamplestr": "0; \"\\u0000\"",</mark>
     "shrinks": 12,
     "exc": false,
     "tests": 2,
@@ -974,6 +973,271 @@ class CaesarsCipher {
     }
     ...
 }
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const Logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let mockError, caesarsCipher
+        beforeEach(() => {
+            <mark>mockError = jest.spyOn(Logger.prototype, 'error')</mark>
+            <mark>mockError.mockImplementation(() => {})</mark>
+            caesarsCipher = new CaesarsCipher()
+        })
+
+        afterEach(() => {
+            mockError.mockRestore()
+        })
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(Logger.prototype.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const Logger = require('./logger')
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let mockError, caesarsCipher
+        beforeEach(() => {
+            mockError = jest.spyOn(Logger.prototype, 'error')
+            mockError.mockImplementation(() => {})
+            caesarsCipher = new CaesarsCipher()
+        })
+
+        afterEach(() => {
+            <mark>mockError.mockRestore()</mark>
+        })
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(Logger.prototype.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+class CaesarsCipher {
+    constructor({ <mark>logger</mark> }) {
+        this.logger = <mark>logger</mark>;
+    }
+
+    encode(shift, message) {
+        if (shift &lt; 0 || shift &gt; 26) {
+            const msg = `"${shift}" is no valid shift parameter!`
+            this.logger.error(msg)
+            throw new TypeError(msg)
+        }
+        ...
+    }
+    ...
+}
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+<mark>                                  </mark>
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let logger, caesarsCipher
+        beforeEach(() => {
+            logger = <mark>{</mark>
+            <mark>    error: jest.fn()</mark>
+            <mark>}</mark>
+            caesarsCipher = new CaesarsCipher({ logger })
+        })
+
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+    </code></pre>
+            </section>
+
+
+            <section>
+                <h3>caesars-cipher.spec.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+
+
+describe('CaesarsCipher', () => {
+    describe('encode', () => {
+        let logger, caesarsCipher
+        beforeEach(() => {
+            <mark>logger</mark> = {
+                error: jest.fn()
+            }
+            caesarsCipher = new CaesarsCipher({ <mark>logger</mark> })
+        })
+
+        it('should call logger on wrong shift value', () => {
+            const corruptShift = 27
+            expect(() => { 
+                CaesarsCipher.encode(corruptShift, 'ABC')
+            }).toThrow()
+            expect(logger.error).toHaveBeenCalled()
+        })
+    })
+})
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const logger = require('./logger')
+
+const caesarsCipher = new CaesarsCipher({ logger })
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const <mark>logger</mark> = require('./logger')
+
+const caesarsCipher = new CaesarsCipher({ <mark>logger</mark> })
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>app.js</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const CaesarsCipher = require('./caesars-cipher')
+const logger = require('./logger')
+
+const <mark>caesarsCipher</mark> = new CaesarsCipher({ logger })
+console.log(<mark>caesarsCipher.encode(1, process.argv[2])</mark>)
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('<mark>awilix</mark>')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { <mark>createContainer</mark>, asClass, asValue } = require('awilix')
+
+const container = <mark>createContainer()</mark>
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, <mark>asClass</mark>, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: <mark>asClass(require('./caesars-cipher'))</mark>,
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+<pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, <mark>asValue</mark> } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    caesarsCipher: asClass(require('./caesars-cipher')),
+    logger: <mark>asValue(require('./logger'))</mark>
+})
+
+const caesarsCipher = container.resolve('caesarsCipher')
+console.log(caesarsCipher.encode(1, process.argv[2]))
+                </code></pre>
+            </section>
+            <section>
+                <h3>Automatic Dependency Injection</h3>
+                <pre><code class="lang-JavaScript" data-trim data-noescape>
+const { createContainer, asClass, asValue } = require('awilix')
+
+const container = createContainer()
+
+container.register({
+    <mark>caesarsCipher</mark>: asClass(require('./caesars-cipher')),
+    logger: asValue(require('./logger'))
+})
+
+const caesarsCipher = <mark>container.resolve('caesarsCipher')</mark>
+console.log(caesarsCipher.encode(1, process.argv[2]))
                 </code></pre>
             </section>
             <section>
