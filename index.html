@@ -192,7 +192,7 @@ describe('caesars-cipher', () => {
                         static encode(shift, text) {
                             let result = ""
                             for (let i = 0; i &lt; text.length; i++) {
-                                result += <mark>String.fromCharCode</mark>  (text.charCodeAt(i) + shift)
+                                result += <mark>String.fromCharCode</mark>(text.charCodeAt(i) + shift)
                             }
                             return result
                         }
