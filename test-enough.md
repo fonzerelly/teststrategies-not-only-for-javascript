@@ -1,5 +1,5 @@
 ## Did I do enough tests?
-<img src="images/did-i-do-enough-tests.jpg" width="50%">
+<img src="images/trust.jpg" width="70%">
 Note: In the beginning of this talk, I described the situation that we need to take care to prevent the broken window syndrome and we need trust in our test? So until now I showed you a lot of testing techniques and if you apply them, I suppose you will get a lot of good tests. But how can you get trust? Let's say you apply those techniques but your collegues are not so strict. This would mean, your code is properly tested but the rest of the application is not tested properly. This would mean that your team would loose confidence into the outcome of the test. So we need some kinds of quality measures to assure our trust.
 
 ??HORIZONTAL
