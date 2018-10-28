@@ -740,7 +740,7 @@ describe('invariant', () =>  {
     it('should hold true for any parameter', () => {
         const outcome = jsc.checkForall(
             <mark>jsc.nat(26)</mark>, //only positive values up to 26
-            jsc.sothat(jsc.asciistring, (text) => {
+            jsc.suchthat(jsc.asciistring, (text) => {
                 return text.match(/^[A-Z]*$/)
             },
             (shift, text) => {
@@ -764,7 +764,7 @@ describe('invariant', () =>  {
     it('should hold true for any parameter', () => {
         const outcome = jsc.checkForall(
             jsc.nat(26), //only positive values up to 26
-            jsc.sothat(<mark>jsc.asciistring</mark>, (text) => {
+            jsc.suchthat(<mark>jsc.asciistring</mark>, (text) => {
                 return text.match(/^[A-Z]*$/)
             },
             (shift, text) => {
@@ -788,7 +788,7 @@ describe('invariant', () =>  {
     it('should hold true for any parameter', () => {
         const outcome = jsc.checkForall(
             jsc.nat(26), //only positive values up to 26
-            <mark>jsc.sothat</mark>(jsc.asciistring, (text) => {
+            <mark>jsc.suchthat</mark>(jsc.asciistring, (text) => {
                 return text.match(<mark>/^[A-Z]*$/</mark>)
             },
             (shift, text) => {
