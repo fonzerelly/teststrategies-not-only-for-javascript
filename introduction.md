@@ -2,10 +2,9 @@
 ## (not only) 
 ## for JavaScript
 by Christian H&ouml;rauf<br>
-<img src="images/twitter.png" width="5%"><sup>@fonzygruen</sup>
 
 ??HORIZONTAL
-<img src="images/consorsbank.jpg">
+<img src="images/teambank.png">
 Note: Hi all, thanx for having me here. My name is Christian Hörauf and I work as a developer for Consorsbank in Nürnberg. Last year I gave Santa Clause for the children of our friends. And you know St Clauses Business. Providing pesents for children. But his unique selling point is this incredibly tough time schedule to visit all children in one night. You know this event, when everybody sets up Trees in their rooms and meets their families and stuff - X-Mess. And in that same night when I played St Clause, I had the dream that lead elves of computer game develoment was talking to me. And this is what he said:
 
 Hey Santa, we need to talk about our flow of production. I understand that for you it is most important that we create presents, presents, presents. But I you know, that we do not have the progress you expected and maybe we can invest a little bit more time in our development process. I would love to provide you some ideas: 
@@ -49,6 +48,18 @@ And this was exactly what happened to our quality measures.
 * If you do not trust in them, you do not take care of them <!-- .element: class="fragment" -->
 * If you do not take care of them, they will become worthless <!-- .element: class="fragment" -->
 * And you will be left with a bulk of unmaintainable code, as always... <!-- .element: class="fragment" -->
+
+
+??HORIZONTAL
+### Black- vs Whitebox Testing
+<img src="images/black_vs_white.png" width="45%">
+Note: As a special interest request, we need to introduce the Terms Black- and whitebox Testing. Blackbox testing is it, when you don't know what is inside it and only can
+see its outer appearance (Let's call it "interface".) And there are Whitebox-tests, where you know the internals of the box (like here, where you know there is dirty underware inside the box), which allows you to test it more deeply and with more detail. What do you think could be advantages vs disadvantages for both methodologies?
+
+??HORIZONTAL
+### Smoketests
+<img src="images/smoketests.png" width="45%">
+Note: Another speciel interest request was the whish to introduce so called smoke tests. Those are used as a very simple form of test just to realize that a system still works after a deplyoment.
 
 ??HORIZONTAL
 ### Testing Pyramid
